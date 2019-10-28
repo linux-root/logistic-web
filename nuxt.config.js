@@ -48,6 +48,15 @@ export default {
   ],
     auth: {
      //option
+        strategies: {
+          local: {
+              endpoints: {
+                  login: { url: '/users/login', method: 'post', propertyName: 'token' },
+                  logout: { url: '/api/auth/logout', method: 'post' },
+                  user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+              }
+          }
+        }
     },
     router: {
       middleware: ['auth']
@@ -57,6 +66,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseURL: 'http://localhost:3000/'
   },
   /*
   ** vuetify module configuration

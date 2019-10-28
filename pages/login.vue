@@ -8,9 +8,7 @@
                         <v-spacer></v-spacer>
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on }">
-                                <v-btn
-                                        :href="source"
-                                        icon
+                                <v-btn icon
                                         large
                                         target="_blank"
                                         v-on="on"
@@ -36,13 +34,13 @@
                     </v-toolbar>
                     <v-card-text>
                         <v-form>
-                            <v-text-field label="Login" name="login" prepend-icon="mdi-account" type="text" ></v-text-field>
-                            <v-text-field id="password" label="Password" name="password" prepend-icon="mdi-lock" type="password" ></v-text-field>
+                            <v-text-field v-model="email" label="Login" name="login" prepend-icon="mdi-account" type="text" ></v-text-field>
+                            <v-text-field v-model="password" id="password" label="Password" name="password" prepend-icon="mdi-lock" type="password" ></v-text-field>
                         </v-form>
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary">Login</v-btn>
+                        <v-btn color="primary" @click="login()">Login</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-flex>
@@ -53,7 +51,26 @@
 <script>
     export default {
         name: "login",
-        layout: "login"
+        layout: "login",
+        data : () => ({
+                email: '',
+                password: ''
+            })
+    ,
+        methods :{
+            login: function() {
+            console.log(this.email);
+               const that = this;
+
+                this.$auth.loginWith('local', {
+                        data: {
+                            email: that.email,
+                            password: that.password
+                        }
+                    }
+                )
+            }
+        }
     }
 </script>
 
