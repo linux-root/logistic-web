@@ -50,6 +50,7 @@
 
 <script>
     export default {
+        middleware: 'guest',
         name: "login",
         layout: "login",
         data : () => ({
@@ -73,7 +74,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

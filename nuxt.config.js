@@ -53,13 +53,19 @@ export default {
               endpoints: {
                   login: { url: '/users/login', method: 'post', propertyName: 'token' },
                   logout: { url: '/api/auth/logout', method: 'post' },
-                  user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+                  user: { url: '/users/me', method: 'get', propertyName: 'user' }
               }
           }
+        },
+        redirect: {
+            login: '/login',
+            logout: '/',
+            // callback: '/login',
+            home: '/'
         }
     },
     router: {
-      middleware: ['auth']
+     /* middleware: ['auth']*/
     },
   /*
   ** Axios module configuration
