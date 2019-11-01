@@ -62,13 +62,19 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
+
+    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed >
       <v-list>
+
+        <v-list-item @click="logout">
+          <v-list-item-action>
+            <v-icon light>
+              mdi-logout-variant
+            </v-icon>
+          </v-list-item-action>
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item>
+
         <v-list-item @click.native="right = !right">
           <v-list-item-action>
             <v-icon light>
@@ -112,6 +118,11 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js'
     }
-  }
+  },
+    methods: {
+      logout(){
+          this.$auth.logout();
+      }
+    }
 }
 </script>

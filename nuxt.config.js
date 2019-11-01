@@ -52,21 +52,22 @@ export default {
           local: {
               endpoints: {
                   login: { url: '/users/login', method: 'post', propertyName: 'token' },
-                  logout: { url: '/api/auth/logout', method: 'post' },
-                  user: { url: '/users/me', method: 'get', propertyName: 'user' }
+                  logout: false,
+                  user: { url: '/users/me', method: 'get', propertyName:'user'}
               }
           }
-        },
+        }
+        ,
         redirect: {
             login: '/login',
-            logout: '/',
+            logout: '/login',
             // callback: '/login',
             home: '/'
         }
     },
-    router: {
-     /* middleware: ['auth']*/
-    },
+   /* router: {
+      middleware: ['auth']
+    },*/
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

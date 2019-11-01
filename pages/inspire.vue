@@ -10,10 +10,19 @@
         &#8220;First, solve the problem. Then, write the code.&#8221;
         <footer>
           <small>
-            <em>&mdash;John Johnson</em>
+            <em>&mdash;{{user.name}}</em>
           </small>
         </footer>
       </blockquote>
     </v-flex>
   </v-layout>
 </template>
+<script>
+  export default {
+    data(){
+        return{
+            user: this.$auth.user
+        }
+    }
+  }
+</script>
