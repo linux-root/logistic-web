@@ -1,55 +1,33 @@
 <template>
-    <v-container fluid fill-height >
-        <v-layout align-center justify-center >
-            <v-flex xs12 sm8 md4 >
-                <v-card class="elevation-12">
-                    <v-toolbar color="primary" dark flat >
-                        <v-toolbar-title>Vui lòng đăng nhập</v-toolbar-title>
-                        <v-spacer></v-spacer>
-                        <v-tooltip bottom>
-                            <template v-slot:activator="{ on }">
-                                <v-btn icon
-                                        large
-                                        target="_blank"
-                                        v-on="on"
-                                >
-                                    <v-icon>mdi-code-tags</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Source</span>
-                        </v-tooltip>
-                        <v-tooltip right>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                        icon
-                                        large
-                                        target="_blank"
-                                        v-on="on"
-                                >
-                                    <v-icon>mdi-codepen</v-icon>
-                                </v-btn>
-                            </template>
-                            <span>Codepen</span>
-                        </v-tooltip>
-                    </v-toolbar>
-                    <v-card-text>
-                        <v-form>
-                            <v-text-field v-model="email" label="Login" name="login" prepend-icon="mdi-account" type="text" ></v-text-field>
-                            <v-text-field v-model="password" id="password" label="Password" name="password" prepend-icon="mdi-lock" type="password" ></v-text-field>
-                        </v-form>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" @click="login()">Login</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-flex>
-        </v-layout>
-    </v-container>
+    <v-content>
+        <v-container fluid fill-height>
+            <v-layout align-center justify-center>
+                <v-flex xs12 sm8 md4>
+                    <material-card color="success" elevation="12" title="Love Kaycee System" >
+                        <v-card-text>
+                            <v-form>
+                                <v-text-field type="text" v-model="email" prepend-icon="mdi-account" name="username" label="Login"></v-text-field>
+                                <v-text-field type="password" v-model="password" prepend-icon="mdi-lock" name="password" label="Password"></v-text-field>
+                            </v-form>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-layout justify-center align-center>
+                                <v-btn color="success" @click.prevent="login">Login</v-btn>
+                            </v-layout>
+                        </v-card-actions>
+                    </material-card>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </v-content>
 </template>
 
 <script>
+    import materialCard from '~/components/material/AppCard'
     export default {
+        components: {
+            materialCard
+        },
         middleware: 'guest',
         name: "login",
         layout: "login",

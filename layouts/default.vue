@@ -1,156 +1,79 @@
 <template>
-    <v-app dark>
-        <v-navigation-drawer
-                v-model="drawer"
-                :mini-variant="miniVariant"
-                :clipped="clipped"
-                fixed
-                app
-        >
-            <v-list>
-                <v-list-item
-                        v-for="(item, i) in items"
-                        :key="i"
-                        :to="item.to"
-                        router
-                        exact
-                >
-                    <v-list-item-action>
-                        <v-icon>{{ item.icon }}</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title v-text="item.title"/>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list>
-        </v-navigation-drawer>
-        <v-app-bar
-                :clipped-left="clipped"
-                fixed
-                app
-        >
-            <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-            <v-btn
-                    icon
-                    @click.stop="miniVariant = !miniVariant"
-            >
-                <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-            </v-btn>
-            <v-btn
-                    icon
-                    @click.stop="clipped = !clipped"
-            >
-                <v-icon>mdi-application</v-icon>
-            </v-btn>
-            <v-btn
-                    icon
-                    @click.stop="fixed = !fixed"
-            >
-                <v-icon>mdi-minus</v-icon>
-            </v-btn>
-            <v-toolbar-title v-text="title"/>
-            <v-spacer/>
-            <v-btn
-                    icon
-                    @click.stop="rightDrawer = !rightDrawer"
-            >
-                <v-icon>mdi-menu</v-icon>
-            </v-btn>
-        </v-app-bar>
-        <v-content>
-            <v-container>
-                <nuxt/>
-            </v-container>
-        </v-content>
+  <v-app>
+    <core-filter />
 
-        <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-            <v-list>
+    <core-toolbar />
 
-                <v-list-item @click="logout">
-                    <v-list-item-action>
-                        <v-icon light>
-                            mdi-logout-variant
-                        </v-icon>
-                    </v-list-item-action>
-                    <v-list-item-title>Logout</v-list-item-title>
-                </v-list-item>
+    <core-drawer v-bind:links="items"/>
 
-                <v-list-item @click.native="right = !right">
-                    <v-list-item-action>
-                        <v-icon light>
-                            mdi-repeat
-                        </v-icon>
-                    </v-list-item-action>
-                    <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-                </v-list-item>
-            </v-list>
-        </v-navigation-drawer>
-        <v-footer
-                :fixed="fixed"
-                app
-        >
-            <span>&copy; 2019</span>
-        </v-footer>
-    </v-app>
+    <core-view />
+  </v-app>
 </template>
 
 <script>
-    const MANAGER_MENU_ITEMS = [
-        {
-            icon: 'mdi-apps',
-            title: 'Welcome',
-            to: '/'
-        },
-        {
-            icon: 'mdi-chart-bubble',
-            title: 'Inspire',
-            to: '/inspire'
-        },
-        {
-            icon: 'mdi-account-card-details',
-            title: 'Đăng ký Shipper',
-            to: '/manager/register-shipper'
-        }
-    ]
+  import coreFilter from '~/components/core/AppFilter';
+  import coreToolbar from '~/components/core/AppToolbar';
+  import coreDrawer from '~/components/core/AppDrawer';
+  import coreView from '~/components/core/AppView';
 
-    const SHIPPER_MENU_ITEMS = [
-        {
-            icon: 'mdi-apps',
-            title: 'Welcome',
-            to: '/'
-        },
-        {
-            icon: 'mdi-chart-bubble',
-            title: 'Inspire',
-            to: '/inspire'
-        }
-    ]
-    export default {
-        data() {
-            return {
-                clipped: false,
-                drawer: false,
-                fixed: false,
-                miniVariant: false,
-                right: true,
-                rightDrawer: false,
-                title: 'Vuetify.js'
-            }
-        },
-        methods: {
-            logout() {
-                this.$auth.logout();
-            },
+  const MANAGER_MENU_ITEMS = [
+      {
+          to: '/dashboard',
+          icon: 'mdi-view-dashboard',
+          text: 'Dashboard'
+      },
+      {
+          icon: 'mdi-apps',
+          text: 'Welcome',
+          to: '/'
+      },
+      {
+          icon: 'mdi-chart-bubble',
+          text: 'Inspire',
+          to: '/inspire'
+      },
+      {
+          icon: 'mdi-account-card-details',
+          text: 'Đăng ký Shipper',
+          to: '/manager/register-shipper'
+      }
+  ]
 
-        },
-        computed: {
-            items() {
-                if (this.$auth.user.is_manager) {
-                    return MANAGER_MENU_ITEMS;
-                } else {
-                    return SHIPPER_MENU_ITEMS;
-                }
-            }
-        }
-    }
+  const SHIPPER_MENU_ITEMS = [
+      {
+          icon: 'mdi-apps',
+          text: 'Welcome',
+          to: '/'
+      },
+      {
+          icon: 'mdi-chart-bubble',
+          text: 'Inspire',
+          to: '/inspire'
+      }
+  ]
+
+  export default {
+    components: {
+      coreFilter,
+      coreToolbar,
+      coreDrawer,
+      coreView
+    },
+      computed: {
+          items() {
+              if (this.$auth.user.is_manager) {
+                  return MANAGER_MENU_ITEMS;
+              } else {
+                  return SHIPPER_MENU_ITEMS;
+              }
+          }
+      }
+  }
 </script>
+
+<style lang="scss">
+  /* Remove in 1.2 */
+  .v-datatable thead th.column.sortable i {
+    vertical-align: unset;
+  }
+</style>
