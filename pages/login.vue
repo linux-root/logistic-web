@@ -59,17 +59,20 @@
             })
     ,
         methods :{
-            login: function() {
-            console.log(this.email);
-               const that = this;
+            login: function () {
+                console.log(this.email);
+                const that = this;
 
-                this.$auth.loginWith('local', {
-                        data: {
-                            email: that.email,
-                            password: that.password
+                    this.$auth.loginWith('local', {
+                            data: {
+                                email: that.email,
+                                password: that.password
+                            }
                         }
-                    }
-                )
+                    ).catch((error)=>{
+                      this.$swal('hello')
+                    })
+
             }
         }
     }

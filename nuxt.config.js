@@ -30,6 +30,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+      '~/plugins/vuelidate'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -42,9 +43,10 @@ export default {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+      '@nuxtjs/axios',
       '@nuxtjs/auth',
-    '@nuxtjs/pwa',
+      '@nuxtjs/pwa',
+      'vue-sweetalert2/nuxt'
   ],
     auth: {
      //option
@@ -53,7 +55,7 @@ export default {
               endpoints: {
                   login: { url: '/users/login', method: 'post', propertyName: 'token' },
                   logout: false,
-                  user: { url: '/users/me', method: 'get', propertyName:'user'}
+                  user: { url: '/users/info', method: 'get', propertyName: false}
               }
           }
         }

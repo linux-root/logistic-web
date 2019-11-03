@@ -10,7 +10,7 @@
         &#8220;First, solve the problem. Then, write the code.&#8221;
         <footer>
           <small>
-            <em>&mdash;{{user.name}}</em>
+            <em>&mdash;{{user.full_name}}</em>
           </small>
         </footer>
       </blockquote>

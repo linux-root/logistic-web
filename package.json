@@ -5,7 +5,7 @@
   "author": "chickentooth",
   "private": true,
   "scripts": {
-    "dev": "nuxt --port 8080",
+    "dev": "nuxt --port 8080 --hostname 0.0.0.0",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
@@ -14,7 +14,9 @@
     "@nuxtjs/auth": "^4.8.4",
     "@nuxtjs/axios": "^5.6.0",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "vue-sweetalert2": "^2.1.5",
+    "vuelidate": "^0.7.4"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0"
