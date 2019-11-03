@@ -69,7 +69,7 @@
 
     export default {
         name: "register-shipper",
-
+        middleware: 'auth',
         validations: {
                 name: {required, maxLength: maxLength(50)},
                 email: {required, email},
