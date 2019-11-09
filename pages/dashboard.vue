@@ -168,27 +168,31 @@
                     <v-tooltip
                       top
                       content-class="top">
+                      <template v-slot:activator="{on}">
                       <v-btn
-                        slot="activator"
                         class="v-btn--simple"
                         color="success"
+                        v-on="on"
                         icon
                       >
                         <v-icon color="primary">mdi-pencil</v-icon>
                       </v-btn>
+                      </template>
                       <span>Edit</span>
                     </v-tooltip>
                     <v-tooltip
                       top
                       content-class="top">
+                      <template v-slot:activator="{on}">
                       <v-btn
-                        slot="activator"
+                        v-on="on"
                         class="v-btn--simple"
                         color="danger"
                         icon
                       >
                         <v-icon color="error">mdi-close</v-icon>
                       </v-btn>
+                      </template>
                       <span>Close</span>
                     </v-tooltip>
 
@@ -206,17 +210,18 @@
                     Lines From Great Russian Literature? Or E-mails From My Boss?
                   </v-list-item-title>
                   <div class="d-flex">
-                    <v-tooltip
-                      top
-                      content-class="top">
+                    <v-tooltip top content-class="top">
+                      <template v-slot:activator="{on}">
                       <v-btn
-                        slot="activator"
                         class="v-btn--simple"
                         color="success"
                         icon
+                        v-on="on"
                       >
                         <v-icon color="primary">mdi-pencil</v-icon>
                       </v-btn>
+                      </template>
+                    </v-tooltip>
                       <span>Edit</span>
                     </v-tooltip>
 
@@ -246,14 +251,17 @@
                     <v-tooltip
                       top
                       content-class="top">
+                      <template v-slot:activator="{on}">
                       <v-btn
                         slot="activator"
                         class="v-btn--simple"
                         color="success"
+                        v-on="on"
                         icon
                       >
                         <v-icon color="primary">mdi-pencil</v-icon>
                       </v-btn>
+                      </template>
                       <span>Edit</span>
                     </v-tooltip>
                     <v-tooltip
