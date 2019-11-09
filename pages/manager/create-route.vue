@@ -66,28 +66,27 @@
     <v-container fill-height fluid grid-list-xl>
         <v-layout justify-center wrap >
             <v-flex xs12 md8 >
-                <material-card color="green" title="Đăng ký Shipper" text="Nhập thông tin Shipper" >
+                <material-card color="green" title="" text="Complete your profile"
+                >
                     <v-form>
                         <v-container py-0>
                             <v-layout wrap>
-                                <v-flex xs12 md4 >
-                                    <v-text-field v-model="name"
-                                                  :error-messages="nameErrors"
-                                                  :counter="50"
-                                                  label="Họ tên"
-                                                  required
-                                                  @input="$v.name.$touch()"
-                                                  @blur="$v.name.$touch()"
-                                    ></v-text-field>
+                                <v-flex
+                                        xs12
+                                        md4
+                                >
+                                    <v-text-field
+                                            label="Company (disabled)"
+                                            disabled/>
                                 </v-flex>
-                                <v-flex xs12 md4 >
-                                    <v-text-field v-model="email"
-                                                  :error-messages="emailErrors"
-                                                  label="E-mail"
-                                                  required
-                                                  @input="$v.email.$touch()"
-                                                  @blur="$v.email.$touch()"
-                                    ></v-text-field>
+                                <v-flex
+                                        xs12
+                                        md4
+                                >
+                                    <v-text-field
+                                            class="purple-input"
+                                            label="User Name"
+                                    />
                                 </v-flex>
                                 <v-flex
                                         xs12
@@ -154,8 +153,11 @@
                                         xs12
                                         text-xs-right
                                 >
-                                    <v-btn class="mx-0 font-weight-light" color="success" >
-                                        Đăng ký
+                                    <v-btn
+                                            class="mx-0 font-weight-light"
+                                            color="success"
+                                    >
+                                        Update Profile
                                     </v-btn>
                                 </v-flex>
                             </v-layout>

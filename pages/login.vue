@@ -6,8 +6,8 @@
                     <material-card color="success" elevation="12" title="Love Kaycee System" >
                         <v-card-text>
                             <v-form>
-                                <v-text-field type="text" v-model="email" prepend-icon="mdi-account" name="username" label="Login"></v-text-field>
-                                <v-text-field type="password" v-model="password" prepend-icon="mdi-lock" name="password" label="Password"></v-text-field>
+                                <v-text-field v-on:keyup.enter="login" type="text" v-model="email" prepend-icon="mdi-account" name="username" label="Login"></v-text-field>
+                                <v-text-field v-on:keyup.enter="login" type="password" v-model="password" prepend-icon="mdi-lock" name="password" label="Password"></v-text-field>
                             </v-form>
                         </v-card-text>
                         <v-card-actions>
