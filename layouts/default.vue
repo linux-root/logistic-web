@@ -34,20 +34,25 @@
       },
       {
           icon: 'mdi-account-card-details',
-          text: 'Đăng ký Shipper',
+          text: 'Đăng ký shipper',
           to: '/manager/register-shipper'
+      },
+      {
+          icon: 'mdi-ship-wheel',
+          text:'Tạo Route',
+          to: '/manager/create-route'
       }
   ]
 
   const SHIPPER_MENU_ITEMS = [
       {
           icon: 'mdi-apps',
-          text: 'Welcome',
+          text: 'welcome',
           to: '/'
       },
       {
           icon: 'mdi-chart-bubble',
-          text: 'Inspire',
+          text: 'inspire',
           to: '/inspire'
       }
   ]

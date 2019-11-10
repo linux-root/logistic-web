@@ -1,165 +1,35 @@
-<!--<template>
-    <v-card flat>
-        <v-snackbar v-model="snackbar" absolute top right color="success">
-            <span>Đăng ký thành công !</span>
-            <v-icon dark>mdi-checkbox-marked-circle</v-icon>
-        </v-snackbar>
-
-        <form @submit.prevent="submit">
-            <v-container fluid>
-                <v-row>
-                    <v-col cols="12" sm="6">
-                        <v-text-field v-model="name"
-                                      :error-messages="nameErrors"
-                                      :counter="50"
-                                      label="Họ tên"
-                                      required
-                                      @input="$v.name.$touch()"
-                                      @blur="$v.name.$touch()"
-                        ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="6">
-                        <v-text-field v-model="email"
-                                      :error-messages="emailErrors"
-                                      label="E-mail"
-                                      required
-                                      @input="$v.email.$touch()"
-                                      @blur="$v.email.$touch()"
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
-
-                <v-select v-model="select"
-                          :items="items"
-                          :error-messages="selectErrors"
-                          label="Hình thức làm việc"
-                          required
-                          @change="$v.select.$touch()"
-                          @blur="$v.select.$touch()"
-                ></v-select>
-
-                <v-text-field v-model="phone"
-                              :error-messages="phoneErrors"
-                              :counter="10"
-                              label="Số điện thoại"
-                              required
-                              @input="$v.phone.$touch()"
-                              @blur="$v.phone.$touch()"
-                ></v-text-field>
-                <v-text-field v-model="citizenId"
-                              :error-messages="citizenIdErrors"
-                              :counter="10"
-                              label="Số CMTND"
-                              required
-                              @input="$v.citizenId.$touch()"
-                              @blur="$v.citizenId.$touch()"
-                ></v-text-field>
-
-                <v-btn class="mr-4" type="submit">Đăng ký</v-btn>
-                <v-btn @click="clear">clear</v-btn>
-            </v-container>
-        </form>
-    </v-card>
-</template>-->
-
 <template>
     <v-container fill-height fluid grid-list-xl>
         <v-layout justify-center wrap >
             <v-flex xs12 md8 >
-                <material-card color="green" title="" text="Complete your profile"
-                >
+                <material-card color="green" title="Tạo Route" text="Nhập thông tin Route" >
                     <v-form>
                         <v-container py-0>
                             <v-layout wrap>
-                                <v-flex
-                                        xs12
-                                        md4
-                                >
-                                    <v-text-field
-                                            label="Company (disabled)"
-                                            disabled/>
+                                <v-flex xs12 md12 >
+                                    <v-text-field v-model="name"
+                                                  :error-messages="nameErrors"
+                                                  :counter="50"
+                                                  label="Tên Route"
+                                                  required
+                                                  @input="$v.name.$touch()"
+                                                  @blur="$v.name.$touch()"
+                                    ></v-text-field>
                                 </v-flex>
-                                <v-flex
-                                        xs12
-                                        md4
-                                >
-                                    <v-text-field
-                                            class="purple-input"
-                                            label="User Name"
-                                    />
+
+                                <v-flex v-for="checkpoint in checkpoints" :key="checkpoint.seq">
+                                   <check-point :locationName="checkpoint.name"/>
                                 </v-flex>
-                                <v-flex
-                                        xs12
-                                        md4
-                                >
-                                    <v-text-field
-                                            label="Email Address"
-                                            class="purple-input"/>
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md6
-                                >
-                                    <v-text-field
-                                            label="First Name"
-                                            class="purple-input"/>
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md6
-                                >
-                                    <v-text-field
-                                            label="Last Name"
-                                            class="purple-input"/>
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md12
-                                >
-                                    <v-text-field
-                                            label="Adress"
-                                            class="purple-input"/>
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md4>
-                                    <v-text-field
-                                            label="City"
-                                            class="purple-input"/>
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md4>
-                                    <v-text-field
-                                            label="Country"
-                                            class="purple-input"/>
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        md4>
-                                    <v-text-field
-                                            class="purple-input"
-                                            label="Postal Code"
-                                            type="number"/>
-                                </v-flex>
-                                <v-flex xs12>
-                                    <v-textarea
-                                            class="purple-input"
-                                            label="About Me"
-                                            value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                                    />
-                                </v-flex>
-                                <v-flex
-                                        xs12
-                                        text-xs-right
-                                >
-                                    <v-btn
-                                            class="mx-0 font-weight-light"
-                                            color="success"
-                                    >
-                                        Update Profile
+
+                                <v-flex xs12 md12>
+                                    <v-btn class="mx-2" @click="addRoute" fab dark color="indigo">
+                                        <v-icon dark>mdi-plus</v-icon>
                                     </v-btn>
                                 </v-flex>
+
+                                    <v-btn type="submit" class="mx-0 font-weight-light" color="success" >
+                                        Lưu Route
+                                    </v-btn>
                             </v-layout>
                         </v-container>
                     </v-form>
@@ -183,11 +53,7 @@
                         <h6 class="category text-gray font-weight-thin mb-3">CEO / CO-FOUNDER</h6>
                         <h4 class="card-title font-weight-light">Alec Thompson</h4>
                         <p class="card-description font-weight-light">Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
-                        <v-btn
-                                color="success"
-                                round
-                                class="font-weight-light"
-                        >Follow</v-btn>
+                        <v-btn color="success" rounded class="font-weight-light" >Follow</v-btn>
                     </v-card-text>
                 </material-card>
             </v-flex>
@@ -199,29 +65,37 @@
     import {required, email, minLength, between, maxLength, numeric} from 'vuelidate/lib/validators'
     import axios from "../../.nuxt/axios";
     const DEFAULT_PASSWORD = 'secret123'
+    import materialCard from '~/components/material/AppCard'
+    import checkPoint from '~/components/map/Checkpoint'
 
     export default {
+        components: {
+            materialCard,
+            checkPoint
+        },
         name: "register-shipper",
         middleware: 'auth',
         validations: {
-                name: {required, maxLength: maxLength(50)},
-                email: {required, email},
-                phone: {required, numeric},
-                select: {required},
-                citizenId: {required, numeric}
+            name: {required, maxLength: maxLength(50)},
+            email: {required, email},
+            phone: {required, numeric},
+            select: {required},
+            citizenId: {required, numeric}
         },
 
         data: () => ({
             name: '',
-            email: '',
-            phone: null,
-            select: null,
-            items: [
-                {text: 'Toàn thời gian', value: 'F'},
-                {text: 'Bán thời gian', value: 'P'}
+            checkpoints: [
+                {
+                    seq: 0,
+                    name : 'Linh Dam'
+                },
+                {
+                    seq: 1,
+                    name: 'Nguy Nhu Kon Tum'
+                }
             ],
-            snackbar: false,
-            citizenId: null
+            snackbar: false
         }),
 
         computed: {
@@ -251,7 +125,7 @@
                 const errors = []
                 if (!this.$v.name.$dirty) return errors
                 !this.$v.name.maxLength && errors.push('Độ dài tên tối đa là 50 ký tự')
-                !this.$v.name.required && errors.push('Nhập họ tên')
+                !this.$v.name.required && errors.push('Nhập tên Route')
                 return errors
             },
             emailErrors() {
@@ -284,13 +158,8 @@
                     })
                 }
             },
-            clear() {
-                this.$v.$reset()
-                this.name = ''
-                this.email = ''
-                this.select = null
-                this.phone = null
-                this.citizenId = null
+            addRoute(){
+
             }
         }
     }
