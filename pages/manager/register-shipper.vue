@@ -133,11 +133,9 @@
 
             citizenIdErrors() {
                 const errors = []
-                console.log(this.$v.citizenId.$dirty)
                 if (!this.$v.citizenId.$dirty) return errors;
                 !this.$v.citizenId.numeric && errors.push('Số CMTND không hợp lệ')
                 !this.$v.citizenId.required && errors.push('Số CMTND không hợp lệ')
-                console.log(errors)
                 return errors
             },
             selectErrors() {
@@ -166,7 +164,6 @@
             submit() {
                 this.$v.$touch()
                 if(!this.$v.dirty){
-                    console.log('submit')
                     const newShipper = {
                         full_name : this.name,
                         email: this.email,

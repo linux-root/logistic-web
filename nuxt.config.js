@@ -1,5 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
+const GOOGLE_MAP_API_KEY = 'AIzaSyAhAV2NWcLitLKgc_3_uo7BmPOuMT5JhKE'
 
 export default {
   mode: 'spa',
@@ -48,7 +49,11 @@ export default {
       '@nuxtjs/axios',
       '@nuxtjs/auth',
       '@nuxtjs/pwa',
-      'vue-sweetalert2/nuxt'
+      'vue-sweetalert2/nuxt',
+      ['nuxt-google-maps-module',{
+        key: GOOGLE_MAP_API_KEY
+      }]
+
   ],
     auth: {
      //option
