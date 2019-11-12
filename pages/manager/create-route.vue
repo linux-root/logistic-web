@@ -18,7 +18,7 @@
                                 </v-flex>
 
                                 <v-flex v-for="checkpoint in checkpoints" :key="checkpoint.seq">
-                                   <check-point :locationName="checkpoint.name"/>
+                                   <check-point :checkpoint="checkpoint"/>
                                 </v-flex>
 
                                 <v-flex xs12 md12>
@@ -88,11 +88,13 @@
             checkpoints: [
                 {
                     seq: 0,
-                    name : 'Linh Dam'
+                    name : 'Linh Dam',
+                    location : {}
                 },
                 {
                     seq: 1,
-                    name: 'Nguy Nhu Kon Tum'
+                    name: 'Nguy Nhu Kon Tum',
+                   locaton : {}
                 }
             ],
             snackbar: false

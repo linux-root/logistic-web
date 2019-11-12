@@ -1,6 +1,6 @@
 <template>
     <v-row justify="center">
-        <v-btn color="primary" dark @click.stop="open">{{locationName}}</v-btn>
+        <v-btn color="primary" dark @click.stop="open">{{checkpoint.name}}</v-btn>
         <v-dialog v-model="dialog" fullscreen  transition="dialog-bottom-transition">
             <v-card>
                 <v-toolbar dark color="primary">
@@ -19,7 +19,7 @@
                             setting
                         </v-flex>
                         <v-flex xs12 md6>
-                            <google-map></google-map>
+                            <google-map :checkpoint="checkpoint"></google-map>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -32,7 +32,7 @@
     import googleMap from './GoogleMap.vue'
     export default {
         name: "Checkpoint",
-        props: ['locationName'],
+        props: ['checkpoint'],
         components : {
             googleMap
         },
