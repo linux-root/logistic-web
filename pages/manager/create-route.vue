@@ -87,14 +87,20 @@
             name: '',
             checkpoints: [
                 {
-                    seq: 0,
+                    seq: 'ae',
                     name : 'Linh Dam',
-                    location : {}
+                    location : {
+                        map : {},
+                        marker: {}
+                    }
                 },
                 {
-                    seq: 1,
+                    seq: 'af',
                     name: 'Nguy Nhu Kon Tum',
-                   locaton : {}
+                    location : {
+                        map: {},
+                        marker: {}
+                    }
                 }
             ],
             snackbar: false

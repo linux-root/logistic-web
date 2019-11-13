@@ -15,7 +15,7 @@
       data: ()=>({
         labels: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         labelIndex: 0,
-        map : {}
+        haha : {}
       }),
       methods: {
         async initMap() {
@@ -40,6 +40,12 @@
             label: this.labels[this.labelIndex++ % this.labels.length],
             map
           });
+          const checkpoint = {
+              map : map,
+              marker : marker
+          };
+
+          this.$store.commit('setCurrent', checkpoint)
         }
         }
     }

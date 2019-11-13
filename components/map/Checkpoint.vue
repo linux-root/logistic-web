@@ -19,7 +19,7 @@
                             setting
                         </v-flex>
                         <v-flex xs12 md6>
-                            <google-map :checkpoint="checkpoint"></google-map>
+                            <google-map></google-map>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -32,7 +32,6 @@
     import googleMap from './GoogleMap.vue'
     export default {
         name: "Checkpoint",
-        props: ['checkpoint'],
         components : {
             googleMap
         },
@@ -45,6 +44,7 @@
         methods : {
            async open(){
                 this.dialog = true;
+
             }
         }
     }
