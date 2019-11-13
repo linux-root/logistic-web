@@ -4,13 +4,13 @@
         <v-dialog v-model="dialog" fullscreen  transition="dialog-bottom-transition">
             <v-card>
                 <v-toolbar dark color="primary">
-                    <v-btn  icon dark @click="dialog = false">
+                    <v-btn  icon dark @click="close()">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
                     <v-toolbar-title>Settings</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark text @click="dialog = false">Save</v-btn>
+                        <v-btn dark text @click="save()">Save</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <v-container py-0>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import {mapActions} from 'vuex'
+  import {mapActions, mapGetters} from 'vuex'
     import googleMap from './GoogleMap.vue'
     export default {
         name: "Checkpoint",
@@ -43,16 +43,28 @@
         sound: true,
         widgets: false
     }),
+      computed: {
+          ...mapGetters({
+            currentCheckpoint: 'checkpoint/getCurrentCheckpoint'
+          })
+      },
+
         methods : {
           ...mapActions({
             setCurrentCheckpoint: 'checkpoint/setCurrentCheckpoint'
           }),
            async open(){
                 this.dialog = true;
-                this.setCurrentCheckpoint({
-                  name: 'ahihi',
-                  location: 'fuck'
-                })
+                this.setCurrentCheckpoint(this.checkpoint)
+            },
+            close(){
+               this.dialog = false;
+            },
+          save(){
+              this.dialog = false;
+              console.log('current checkpoint');
+              this.checkpoint.location = this.currentCheckpoint.location;
+              console.log(this.checkpoint)
             }
         }
     }

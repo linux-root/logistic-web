@@ -21,17 +21,18 @@
             setCurrentCheckpoint: 'checkpoint/setCurrentCheckpoint'
           }),
         async initMap() {
-          const mapDomElement = this.$refs.map;
           const kaycee = {lat: 20.962193, lng: 105.831582};
           // The map, centered at Uluru
           const map = new this.$google.maps.Map(mapDomElement, {zoom: 15, center: kaycee});
+
+
+
+
           // This event listener calls addMarker() when the map is clicked.
           this.$google.maps.event.addListener(map, 'click',  (event) => {
-            const marker = this.addMarker(event.latLng, map);
-
-            this.setCurrentCheckpoint({
-              map : map,
-              location: marker
+             this.addMarker(event.latLng, map);
+             this.setCurrentCheckpoint({
+               geo_coordinate: {lat: event.latLng.lat(), lng: event.latLng.lng()}
             })
 
           });
