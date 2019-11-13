@@ -1,5 +1,5 @@
 export default {
-  setDrawer({commit}, checkpoint) {
+  setCurrentCheckpoint({commit}, checkpoint) {
     commit('SET_CURRENT_CHECKPOINT', checkpoint)
   }
 }

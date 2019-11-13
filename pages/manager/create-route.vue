@@ -18,7 +18,7 @@
                                 </v-flex>
 
                                 <v-flex v-for="checkpoint in checkpoints" :key="checkpoint.seq">
-                                   <check-point :checkpoint="checkpoint"/>
+                                  <checkpoint :checkpoint="checkpoint"></checkpoint>
                                 </v-flex>
 
                                 <v-flex xs12 md12>
@@ -51,7 +51,7 @@
                     </v-avatar>
                     <v-card-text class="text-xs-center">
                         <h6 class="category text-gray font-weight-thin mb-3">CEO / CO-FOUNDER</h6>
-                        <h4 class="card-title font-weight-light">Alec Thompson</h4>
+                        <h4 class="card-title font-weight-light">{{this.$auth.user.full_name}}</h4>
                         <p class="card-description font-weight-light">Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...</p>
                         <v-btn color="success" rounded class="font-weight-light" >Follow</v-btn>
                     </v-card-text>
@@ -66,12 +66,12 @@
     import axios from "../../.nuxt/axios";
     const DEFAULT_PASSWORD = 'secret123'
     import materialCard from '~/components/material/AppCard'
-    import checkPoint from '~/components/map/Checkpoint'
+    import cp from '~/components/map/Checkpoint'
 
     export default {
         components: {
             materialCard,
-            checkPoint
+            checkpoint: cp
         },
         name: "register-shipper",
         middleware: 'auth',
@@ -107,40 +107,11 @@
         }),
 
         computed: {
-            phoneErrors() {
-                const errors = []
-                if (!this.$v.phone.$dirty) return errors
-                !this.$v.phone.numeric && errors.push('Số điện thoại không hợp lệ');
-                return errors
-            },
-
-            citizenIdErrors() {
-                const errors = []
-                console.log(this.$v.citizenId.$dirty)
-                if (!this.$v.citizenId.$dirty) return errors;
-                !this.$v.citizenId.numeric && errors.push('Số CMTND không hợp lệ')
-                !this.$v.citizenId.required && errors.push('Số CMTND không hợp lệ')
-                console.log(errors)
-                return errors
-            },
-            selectErrors() {
-                const errors = []
-                if (!this.$v.select.$dirty) return errors
-                !this.$v.select.required && errors.push('Vui lòng chọn thời gian làm việc')
-                return errors
-            },
             nameErrors() {
                 const errors = []
                 if (!this.$v.name.$dirty) return errors
                 !this.$v.name.maxLength && errors.push('Độ dài tên tối đa là 50 ký tự')
                 !this.$v.name.required && errors.push('Nhập tên Route')
-                return errors
-            },
-            emailErrors() {
-                const errors = []
-                if (!this.$v.email.$dirty) return errors
-                !this.$v.email.email && errors.push('E-mail không hợp lệ')
-                !this.$v.email.required && errors.push('Nhập E-mail')
                 return errors
             }
         },

@@ -29,9 +29,11 @@
 </template>
 
 <script>
+  import {mapActions} from 'vuex'
     import googleMap from './GoogleMap.vue'
     export default {
         name: "Checkpoint",
+       props:['checkpoint'],
         components : {
             googleMap
         },
@@ -42,9 +44,15 @@
         widgets: false
     }),
         methods : {
+          ...mapActions({
+            setCurrentCheckpoint: 'checkpoint/setCurrentCheckpoint'
+          }),
            async open(){
                 this.dialog = true;
-
+                this.setCurrentCheckpoint({
+                  name: 'ahihi',
+                  location: 'fuck'
+                })
             }
         }
     }

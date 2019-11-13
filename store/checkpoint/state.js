@@ -1,3 +1,6 @@
 export default () => ({
-  currentCheckpoint: {}
+  currentCheckpoint: {
+    map: {},
+    location: {}
+  }
 })

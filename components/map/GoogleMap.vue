@@ -3,21 +3,23 @@
 </template>
 
 <script>
+  import {mapGetters, mapActions} from 'vuex'
     export default {
         name: "google-map",
        async mounted(){
-           console.log('mounted bug');
+           console.log('mounted googleMap');
            console.log(this.$refs);
            await this.initMap();
         },
-      props: ['checkpoint'],
-
       data: ()=>({
         labels: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         labelIndex: 0,
-        haha : {}
+        checkpoint : {}
       }),
       methods: {
+          ...mapActions({
+            setCurrentCheckpoint: 'checkpoint/setCurrentCheckpoint'
+          }),
         async initMap() {
           const mapDomElement = this.$refs.map;
           const kaycee = {lat: 20.962193, lng: 105.831582};
@@ -25,10 +27,14 @@
           const map = new this.$google.maps.Map(mapDomElement, {zoom: 15, center: kaycee});
           // This event listener calls addMarker() when the map is clicked.
           this.$google.maps.event.addListener(map, 'click',  (event) => {
-            this.addMarker(event.latLng, map);
-          });
+            const marker = this.addMarker(event.latLng, map);
 
-          this.map = map;
+            this.setCurrentCheckpoint({
+              map : map,
+              location: marker
+            })
+
+          });
         },
 
         // Adds a marker to the map.
@@ -40,12 +46,8 @@
             label: this.labels[this.labelIndex++ % this.labels.length],
             map
           });
-          const checkpoint = {
-              map : map,
-              marker : marker
-          };
 
-          this.$store.commit('setCurrent', checkpoint)
+          return marker;
         }
         }
     }
