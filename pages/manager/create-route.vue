@@ -89,18 +89,12 @@
                 {
                     seq: 'ae',
                     name : 'Linh Dam',
-                    location : {
-                        map : {},
-                        marker: {}
-                    }
+                    geo_coordinate : {}
                 },
                 {
                     seq: 'af',
                     name: 'Nguy Nhu Kon Tum',
-                    location : {
-                        map: {},
-                        marker: {}
-                    }
+                    geo_coordinate: {}
                 }
             ],
             snackbar: false

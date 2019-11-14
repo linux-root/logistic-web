@@ -8,7 +8,6 @@
         name: "google-map",
        async mounted(){
            console.log('mounted googleMap');
-           console.log(this.$refs);
            await this.initMap();
         },
       data: ()=>({
@@ -22,13 +21,8 @@
           }),
         async initMap() {
           const kaycee = {lat: 20.962193, lng: 105.831582};
-          // The map, centered at Uluru
-          const map = new this.$google.maps.Map(mapDomElement, {zoom: 15, center: kaycee});
+          const map = new this.$google.maps.Map(this.$refs.map, {zoom: 15, center: kaycee});
 
-
-
-
-          // This event listener calls addMarker() when the map is clicked.
           this.$google.maps.event.addListener(map, 'click',  (event) => {
              this.addMarker(event.latLng, map);
              this.setCurrentCheckpoint({

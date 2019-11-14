@@ -63,7 +63,8 @@
           save(){
               this.dialog = false;
               console.log('current checkpoint');
-              this.checkpoint.location = this.currentCheckpoint.location;
+              this.checkpoint.geo_coordicate = this.currentCheckpoint.geo_coordicate;
+              console.log(this.currentCheckpoint)
               console.log(this.checkpoint)
             }
         }
