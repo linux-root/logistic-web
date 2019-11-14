@@ -1,6 +1,7 @@
 <template>
     <v-row justify="center">
-        <v-btn color="primary" dark @click.stop="open">{{checkpoint.name}}</v-btn>
+        <!--<v-btn color="primary" dark @click.stop="open">{{checkpoint.name}}</v-btn>-->
+        <slot :openMethod="open"></slot>
         <v-dialog v-model="dialog" fullscreen  transition="dialog-bottom-transition">
             <v-card>
                 <v-toolbar dark color="primary">
@@ -15,9 +16,18 @@
                 </v-toolbar>
                 <v-container py-0>
                     <v-layout wrap>
-                        <v-flex xs12 md6 >
-                            setting
-                        </v-flex>
+                            <v-flex xs12 md6>
+                                <v-card>
+                                <v-text-field v-model="checkpointName"
+                                              :error-messages="nameErrors"
+                                              :counter="50"
+                                              label="Tên Checkpoint"
+                                              required
+                                              @input="$v.name.$touch()"
+                                              @blur="$v.name.$touch()"
+                                ></v-text-field>
+                                    </v-card>
+                            </v-flex>
                         <v-flex xs12 md6>
                             <google-map></google-map>
                         </v-flex>
@@ -30,45 +40,57 @@
 
 <script>
   import {mapActions, mapGetters} from 'vuex'
-    import googleMap from './GoogleMap.vue'
-    export default {
-        name: "Checkpoint",
-       props:['checkpoint'],
-        components : {
-            googleMap
-        },
-        data: () => ({
-        dialog: false,
-        notifications: false,
-        sound: true,
-        widgets: false
-    }),
+  import googleMap from './GoogleMap.vue'
+  import {required, email, minLength, between, maxLength, numeric} from 'vuelidate/lib/validators'
+
+  export default {
+      name: "Checkpoint",
+      props: ['checkpoint'],
+      components: {
+          googleMap
+      },
+      validations: {
+          name: {required, maxLength: maxLength(50)}
+      },
+      data: () => ({
+          dialog: false,
+          notifications: false,
+          sound: true,
+          widgets: false,
+          checkpointName: ''
+      }),
       computed: {
           ...mapGetters({
-            currentCheckpoint: 'checkpoint/getCurrentCheckpoint'
-          })
+              currentCheckpoint: 'checkpoint/getCurrentCheckpoint'
+          }),
+          nameErrors() {
+                  const errors = []
+                  if (!this.$v.name.$dirty) return errors
+                  !this.$v.name.maxLength && errors.push('Độ dài tên tối đa là 50 ký tự')
+                  !this.$v.name.required && errors.push('Nhập tên Route')
+                  return errors
+          }
       },
 
-        methods : {
+      methods: {
           ...mapActions({
-            setCurrentCheckpoint: 'checkpoint/setCurrentCheckpoint'
+              setCurrentCheckpoint: 'checkpoint/setCurrentCheckpoint'
           }),
-           async open(){
-                this.dialog = true;
-                this.setCurrentCheckpoint(this.checkpoint)
-            },
-            close(){
-               this.dialog = false;
-            },
-          save(){
+          async open() {
+              this.dialog = true;
+              this.setCurrentCheckpoint(this.checkpoint)
+          },
+          close() {
               this.dialog = false;
-              console.log('current checkpoint');
-              this.checkpoint.geo_coordicate = this.currentCheckpoint.geo_coordicate;
-              console.log(this.currentCheckpoint)
-              console.log(this.checkpoint)
-            }
-        }
-    }
+          },
+          save() {
+              this.dialog = false;
+              this.checkpoint.geo_coordinate = this.currentCheckpoint.geo_coordinate;
+              this.checkpoint.name = this.checkpointName
+
+          }
+      }
+  }
 </script>
 
 <style scoped>

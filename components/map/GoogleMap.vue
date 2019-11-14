@@ -11,9 +11,10 @@
            await this.initMap();
         },
       data: ()=>({
-        labels: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-        labelIndex: 0,
-        checkpoint : {}
+          labels: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+          labelIndex: 0,
+          checkpoint : {},
+          marker : null
       }),
       methods: {
           ...mapActions({
@@ -24,7 +25,10 @@
           const map = new this.$google.maps.Map(this.$refs.map, {zoom: 15, center: kaycee});
 
           this.$google.maps.event.addListener(map, 'click',  (event) => {
-             this.addMarker(event.latLng, map);
+              if(this.marker){
+                  this.marker.setMap(null)
+              }
+             this.marker = this.addMarker(event.latLng, map);
              this.setCurrentCheckpoint({
                geo_coordinate: {lat: event.latLng.lat(), lng: event.latLng.lng()}
             })

@@ -3,7 +3,7 @@
         <v-layout justify-center wrap >
             <v-flex xs12 md8 >
                 <material-card color="green" title="Tạo Route" text="Nhập thông tin Route" >
-                    <v-form>
+                    <v-form @submit.prevent="submit">
                         <v-container py-0>
                             <v-layout wrap>
                                 <v-flex xs12 md12 >
@@ -17,14 +17,16 @@
                                     ></v-text-field>
                                 </v-flex>
 
-                                <v-flex v-for="checkpoint in checkpoints" :key="checkpoint.seq">
-                                  <checkpoint :checkpoint="checkpoint"></checkpoint>
+                                <v-flex xs12 md12 v-for="checkpoint in currentRoute.checkpoints" :key="checkpoint.seq">
+                                  <checkpoint :checkpoint="checkpoint" v-slot="{openMethod}">
+                                          <v-btn color="primary" @click.stop="openMethod" >{{checkpoint.name}}</v-btn>
+                                  </checkpoint>
                                 </v-flex>
 
                                 <v-flex xs12 md12>
-                                    <v-btn class="mx-2" @click="addRoute" fab dark color="indigo">
-                                        <v-icon dark>mdi-plus</v-icon>
-                                    </v-btn>
+                                        <v-btn class="mx-2" @click="addCheckpoint" fab dark color="indigo">
+                                            <v-icon dark>mdi-plus</v-icon>
+                                        </v-btn>
                                 </v-flex>
 
                                     <v-btn type="submit" class="mx-0 font-weight-light" color="success" >
@@ -64,16 +66,16 @@
 <script>
     import {required, email, minLength, between, maxLength, numeric} from 'vuelidate/lib/validators'
     import axios from "../../.nuxt/axios";
-    const DEFAULT_PASSWORD = 'secret123'
     import materialCard from '~/components/material/AppCard'
     import cp from '~/components/map/Checkpoint'
+    import {mapSetters, mapGetters, mapActions} from 'vuex'
 
     export default {
         components: {
             materialCard,
             checkpoint: cp
         },
-        name: "register-shipper",
+        name: "created-route",
         middleware: 'auth',
         validations: {
             name: {required, maxLength: maxLength(50)},
@@ -85,7 +87,7 @@
 
         data: () => ({
             name: '',
-            checkpoints: [
+           /* checkpoints: [
                 {
                     seq: 'ae',
                     name : 'Linh Dam',
@@ -96,11 +98,14 @@
                     name: 'Nguy Nhu Kon Tum',
                     geo_coordinate: {}
                 }
-            ],
+            ],*/
             snackbar: false
         }),
 
         computed: {
+             ...mapGetters({
+               currentRoute: 'route/getCurrentRoute'
+            }),
             nameErrors() {
                 const errors = []
                 if (!this.$v.name.$dirty) return errors
@@ -111,28 +116,18 @@
         },
 
         methods: {
-            submit() {
-                this.$v.$touch()
-                if(!this.$v.dirty){
-                    console.log('submit')
-                    const newShipper = {
-                        full_name : this.name,
-                        email: this.email,
-                        working_time: this.select,
-                        phone: this.phone,
-                        citizen_id: parseInt(this.citizenId),
-                        is_active: false,
-                        is_manager: false,
-                        password: DEFAULT_PASSWORD
-                    }
-                    this.$axios.post('/users', newShipper).then(res=>{
-                        console.log(res)
-                        this.snackbar =true;
-                    })
-                }
-            },
-            addRoute(){
+            ...mapActions({
+                addCheckpointX: 'route/addCheckpoint'
+            }),
 
+            submit() {
+             console.log(this.checkpoints);
+            },
+            addCheckpoint(){
+               const newCheckpoint = {
+                   name : 'new checkpoint'
+               }
+                this.addCheckpointX(newCheckpoint)
             }
         }
     }
