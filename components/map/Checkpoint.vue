@@ -29,7 +29,7 @@
                                     </v-card>
                             </v-flex>
                         <v-flex xs12 md6>
-                            <google-map></google-map>
+                            <google-map :checkpoint="checkpoint"></google-map>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -52,17 +52,18 @@
       validations: {
           name: {required, maxLength: maxLength(50)}
       },
-    mounted(){
-      this.checkpointName = 'Default name'
-    },
       data: () => ({
           dialog: false,
           notifications: false,
           sound: true,
           widgets: false,
-          checkpointName: ''
+          checkpointName: 'Click to Edit'
       }),
-      computed: {
+     computed: {
+        ...mapGetters({
+            markerCoordinate: 'map/getMarkerCoordinate'
+          }
+        ),
           nameErrors() {
                   const errors = []
                   if (!this.$v.name.$dirty) return errors
@@ -74,7 +75,8 @@
 
       methods: {
           ...mapActions({
-              setCheckpointName: 'route/setCheckpointName'
+              setCheckpointName: 'route/setCheckpointName',
+              setCheckpointCoordinate: 'route/setCheckpointCoordinate'
           }),
           async open() {
               this.dialog = true;
@@ -88,10 +90,12 @@
               // this.checkpoint.name = this.checkpointName
              const seq = this.checkpoint.seq;
              const name = this.checkpointName;
-             const coordinate = this.checkpoint
+             const coordinate = this.markerCoordinate;
              console.log("%c Checkpoint info", 'color: orange; font-weight:bold;');
              console.log({seq, name})
+             console.log({seq, coordinate})
              this.setCheckpointName({seq, name});
+             this.setCheckpointCoordinate({seq, coordinate});
           }
       }
   }

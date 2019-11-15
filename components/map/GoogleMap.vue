@@ -10,19 +10,28 @@
            console.log('mounted googleMap');
            await this.initMap();
         },
+      props: ['checkpoint'],
       data: ()=>({
-          labels: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-          labelIndex: 0,
-          checkpoint : {},
-          marker : null
+          labels: '123456789'
       }),
+      computed:{
+          ...mapGetters({
+            labelIndex: 'map/getMarkerLabelIndex'
+          })
+      },
       methods: {
           ...mapActions({
-            setMarkerCoordinate: 'map/setMarkerCoordinate'
+            setMarkerCoordinate: 'map/setMarkerCoordinate',
+            increaseMarkerLabelIndex: 'map/increaseMarkerLabelIndex'
           }),
         async initMap() {
           const kaycee = {lat: 20.962193, lng: 105.831582};
-          const map = new this.$google.maps.Map(this.$refs.map, {zoom: 15, center: kaycee});
+          const mapCenter = this.checkpoint.geo_coordinate ? this.checkpoint.geo_coordinate : kaycee
+          const map = new this.$google.maps.Map(this.$refs.map, {zoom: 15, center: mapCenter});
+
+          if(this.checkpoint.geo_coordinate){
+             this.addMarker(this.checkpoint.geo_coordinate, map); //add existing location
+          }
 
           this.$google.maps.event.addListener(map, 'click',  (event) => {
               if(this.marker){
@@ -42,10 +51,10 @@
           // from the array of alphabetical characters.
           const marker = new this.$google.maps.Marker({
             position: location,
-            label: this.labels[this.labelIndex++ % this.labels.length],
+            label: this.labels[this.checkpoint.seq % this.labels.length],
             map
           });
-
+          this.increaseMarkerLabelIndex();
           return marker;
         }
         }
