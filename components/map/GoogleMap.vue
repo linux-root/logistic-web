@@ -18,7 +18,7 @@
       }),
       methods: {
           ...mapActions({
-            setCurrentCheckpoint: 'checkpoint/setCurrentCheckpoint'
+            setMarkerCoordinate: 'map/setMarkerCoordinate'
           }),
         async initMap() {
           const kaycee = {lat: 20.962193, lng: 105.831582};
@@ -29,8 +29,8 @@
                   this.marker.setMap(null)
               }
              this.marker = this.addMarker(event.latLng, map);
-             this.setCurrentCheckpoint({
-               geo_coordinate: {lat: event.latLng.lat(), lng: event.latLng.lng()}
+             this.setMarkerCoordinate({
+                  lat: event.latLng.lat(), lng: event.latLng.lng()
             })
 
           });

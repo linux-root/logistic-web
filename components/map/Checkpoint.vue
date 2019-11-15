@@ -52,6 +52,9 @@
       validations: {
           name: {required, maxLength: maxLength(50)}
       },
+    mounted(){
+      this.checkpointName = 'Default name'
+    },
       data: () => ({
           dialog: false,
           notifications: false,
@@ -60,9 +63,6 @@
           checkpointName: ''
       }),
       computed: {
-          ...mapGetters({
-              currentCheckpoint: 'checkpoint/getCurrentCheckpoint'
-          }),
           nameErrors() {
                   const errors = []
                   if (!this.$v.name.$dirty) return errors
@@ -74,20 +74,24 @@
 
       methods: {
           ...mapActions({
-              setCurrentCheckpoint: 'checkpoint/setCurrentCheckpoint'
+              setCheckpointName: 'route/setCheckpointName'
           }),
           async open() {
               this.dialog = true;
-              this.setCurrentCheckpoint(this.checkpoint)
           },
           close() {
               this.dialog = false;
           },
           save() {
               this.dialog = false;
-              this.checkpoint.geo_coordinate = this.currentCheckpoint.geo_coordinate;
-              this.checkpoint.name = this.checkpointName
-
+              // this.checkpoint.geo_coordinate = this.currentCheckpoint.geo_coordinate;
+              // this.checkpoint.name = this.checkpointName
+             const seq = this.checkpoint.seq;
+             const name = this.checkpointName;
+             const coordinate = this.checkpoint
+             console.log("%c Checkpoint info", 'color: orange; font-weight:bold;');
+             console.log({seq, name})
+             this.setCheckpointName({seq, name});
           }
       }
   }
