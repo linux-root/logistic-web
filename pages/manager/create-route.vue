@@ -87,24 +87,13 @@
 
         data: () => ({
             name: '',
-           /* checkpoints: [
-                {
-                    seq: 'ae',
-                    name : 'Linh Dam',
-                    geo_coordinate : {}
-                },
-                {
-                    seq: 'af',
-                    name: 'Nguy Nhu Kon Tum',
-                    geo_coordinate: {}
-                }
-            ],*/
             snackbar: false
         }),
 
         computed: {
              ...mapGetters({
-               currentRoute: 'route/getCurrentRoute'
+               currentRoute: 'route/getCurrentRoute',
+               nextCheckpointSeq: 'route/getNextCheckpointSeq'
             }),
             nameErrors() {
                 const errors = []
@@ -117,15 +106,21 @@
 
         methods: {
             ...mapActions({
-                addCheckpointX: 'route/addCheckpoint'
+                addCheckpointX: 'route/addCheckpoint',
+                setCurrentRoute: 'route/setCurrentRoute',
+                setRouteName: 'route/setRouteName',
+                clearRouteData: 'route/clearRouteData'
             }),
 
             submit() {
              console.log(this.checkpoints);
+              this.clearRouteData();
             },
             addCheckpoint(){
+              const seq = this.nextCheckpointSeq
                const newCheckpoint = {
-                   name : 'new checkpoint'
+                   name : 'Click to Edit',
+                   seq: seq
                }
                 this.addCheckpointX(newCheckpoint)
             }
