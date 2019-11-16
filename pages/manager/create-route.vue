@@ -109,13 +109,19 @@
                 addCheckpointX: 'route/addCheckpoint',
                 setCurrentRoute: 'route/setCurrentRoute',
                 setRouteName: 'route/setRouteName',
+                storeCurrentRoute: 'route/storeCurrentRoute',
                 clearRouteData: 'route/clearRouteData'
             }),
 
             submit() {
-             console.log(this.checkpoints);
+               console.log(this.checkpoints);
+               //save route return id
+                // save checkpoint by route id
+                this.setRouteName(this.name)
+              this.storeCurrentRoute();
               this.clearRouteData();
             },
+
             addCheckpoint(){
               const seq = this.nextCheckpointSeq
                const newCheckpoint = {

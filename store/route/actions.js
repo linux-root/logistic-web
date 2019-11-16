@@ -1,3 +1,4 @@
+
 export default {
   setCurrentRoute({commit}, route) {
     commit('SET_CURRENT_ROUTE', route)
@@ -19,5 +20,19 @@ export default {
 
   clearRouteData({commit}) {
     commit('CLEAR_ROUTE_DATA');
-  }
+  },
+    storeCurrentRoute({commit, state}){
+        const {checkpoints, ...routeWithoutCheckpoints} = state.currentRoute;
+        console.log('saved route', routeWithoutCheckpoints)
+        this.$axios.post('/routes', routeWithoutCheckpoints).then(res => {
+            const routeId = res.data.id;
+            console.log(checkpoints)
+            checkpoints.forEach(cp => {
+               delete cp.seq
+               this.$axios.post(`routes/${routeId}/checkpoints`, cp).then(res => {
+               console.log('saved checkpoint', res.data)
+              })
+            });
+        })
+    }
 }

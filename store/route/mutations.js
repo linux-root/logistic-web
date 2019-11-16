@@ -21,8 +21,10 @@ export default {
     },
     CLEAR_ROUTE_DATA(state){
        state.currentRoute = {
-         name : '',
-         checkpoints: []
-       }
+             name : '',
+             checkpoints: [],
+             status: 'P',
+             assigned_to_shipper: ''
+        }
     }
 }
