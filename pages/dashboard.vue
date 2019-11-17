@@ -3,7 +3,7 @@
     <v-layout wrap>
       <v-flex md12 sm12 lg4 >
         <material-chart-card :data="dailySalesChart.data" :options="dailySalesChart.options" color="info" type="Line" >
-          <h4 class="title font-weight-light">Daily Sales</h4>
+          <h4 class="title font-weight-light">Số lượng giao hàng hôm nay</h4>
           <p class="category d-inline-flex font-weight-light">
             <v-icon color="green" small >
               mdi-arrow-up
@@ -46,7 +46,7 @@
           color="green"
           type="Line"
         >
-          <h3 class="title font-weight-light">Completed Tasks</h3>
+          <h3 class="title font-weight-light">Lượt giao hàng thành công</h3>
           <p class="category d-inline-flex font-weight-light">Last Last Campaign Performance</p>
 
           <template slot="actions">
@@ -99,10 +99,7 @@
         />
       </v-flex>
       <v-flex md12 lg6 >
-        <material-card
-          color="orange"
-          title="Employee Stats"
-          text="New employees on 15th September, 2016"
+        <material-card color="orange" title="Thống kê Shipper" text="New employees on 15th September, 2016"
         >
           <v-data-table :headers="headers" :items="items" hide-default-footer >
             <template slot="headerCell" slot-scope="{ header }" >
