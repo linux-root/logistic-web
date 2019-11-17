@@ -8,7 +8,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
+    titleTemplate: '%s',
     title: 'Logisic',
     meta: [
       { charset: 'utf-8' },
@@ -33,7 +33,8 @@ export default {
   */
   plugins: [
       '~/plugins/vuelidate',
-      '~/plugins/chartist'
+      '~/plugins/chartist',
+      '~/plugins/vue-swal'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -49,7 +50,6 @@ export default {
       '@nuxtjs/axios',
       '@nuxtjs/auth',
       '@nuxtjs/pwa',
-      'vue-sweetalert2/nuxt',
       ['nuxt-google-maps-module',{
         key: GOOGLE_MAP_API_KEY
       }]

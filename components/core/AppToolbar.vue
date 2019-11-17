@@ -103,7 +103,7 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters } from 'vuex'
+  import { mapActions, mapGetters, mapMutations } from 'vuex'
 
   export default {
     data: () => ({
@@ -128,7 +128,7 @@
         setUsername: 'user/setUsername',
         setDrawer: 'app/setDrawer'
       }),
-
+        ...mapMutations({clearAll: 'CLEAR_ALL'}),
       onClickBtn () {
         this.setDrawer(!this.drawer)
       },
@@ -146,6 +146,7 @@
       },
       async logout() {
         await this.setUsername(null);
+        this.clearAll();
         this.$auth.logout();
       }
     },

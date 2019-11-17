@@ -3,7 +3,7 @@
         <v-container fluid fill-height>
             <v-layout align-center justify-center>
                 <v-flex xs12 sm8 md4>
-                    <material-card color="success" elevation="12" title="Love System" >
+                    <material-card color="success" elevation="12" title="Đăng nhập hệ thống" >
                         <v-card-text>
                             <v-form>
                                 <v-text-field v-on:keyup.enter="login" type="text" v-model="email" prepend-icon="mdi-account" name="username" label="Login"></v-text-field>
@@ -28,6 +28,11 @@
         components: {
             materialCard
         },
+        head(){
+            return {
+                title : 'Đăng nhập hệ thống'
+            }
+        },
         middleware: 'guest',
         name: "login",
         layout: "login",
@@ -47,8 +52,9 @@
                                 password: that.password
                             }
                         }
-                    ).catch((error)=>{
-                      this.$swal('hello')
+                    ).catch(error=>{
+                        console.log('statusCode', error.message)
+                      this.$swal("Đã có lỗi xảy ra", error.message, 'warning');
                     })
 
             }

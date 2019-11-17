@@ -9,6 +9,12 @@ export const getters = {
     }
 }
 
+export const mutations = {
+    CLEAR_ALL(state){
+        state = {}
+    }
+}
+
 export const state = () => ({
 
 });

@@ -16,8 +16,8 @@
                 </v-toolbar>
                 <v-container py-0>
                     <v-layout wrap>
+                        <v-card>
                             <v-flex xs12 md6>
-                                <v-card>
                                 <v-text-field v-model="checkpointName"
                                               :error-messages="nameErrors"
                                               :counter="50"
@@ -26,10 +26,13 @@
                                               @input="$v.name.$touch()"
                                               @blur="$v.name.$touch()"
                                 ></v-text-field>
-                                    </v-card>
                             </v-flex>
+                        </v-card>
+
                         <v-flex xs12 md6>
+                            <v-card>
                             <google-map :checkpoint="checkpoint"></google-map>
+                            </v-card>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -61,9 +64,10 @@
       }),
      computed: {
         ...mapGetters({
-            markerCoordinate: 'map/getMarkerCoordinate'
+            markerCoordinate: 'map/getMarkerCoordinate',
           }
         ),
+
           nameErrors() {
                   const errors = []
                   if (!this.$v.name.$dirty) return errors

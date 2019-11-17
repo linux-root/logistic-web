@@ -3,7 +3,7 @@
         <v-layout justify-center wrap >
             <v-flex xs12 md8 >
                 <material-card color="green" title="Đăng ký Shipper" text="Nhập thông tin Shipper" >
-                    <v-form>
+                    <v-form @submit.prevent="submit">
                         <v-container py-0>
                             <v-layout wrap>
                                 <v-flex xs12 md6 >
@@ -176,7 +176,7 @@
                     }
                     this.$axios.post('/users', newShipper).then(res=>{
                         console.log(res)
-                        this.snackbar =true;
+                        this.$swal(`Đăng ký thành công tài khoản cho ${res.data.full_name}`,'', 'success');
                     })
                 }
             },

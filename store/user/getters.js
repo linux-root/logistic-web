@@ -5,5 +5,7 @@ export default {
 
   getFullname(state) {
     return state.firstname + ' ' + state.lastname;
-  }
+  },
+
+  fetch
 }
