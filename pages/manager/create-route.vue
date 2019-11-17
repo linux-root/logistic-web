@@ -27,7 +27,7 @@
 
                                 <v-flex xs12 md12 v-for="checkpoint in currentRoute.checkpoints" :key="checkpoint.seq">
                                     <checkpoint :checkpoint="checkpoint" v-slot="{openMethod}">
-                                        <v-btn color="primary" @click.stop="openMethod">{{checkpoint.name}}</v-btn>
+                                        <v-btn color="primary" @click.stop="openMethod">{{checkpoint.seq}}.{{checkpoint.name}}</v-btn>
                                     </checkpoint>
                                 </v-flex>
 
