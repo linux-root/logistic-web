@@ -22,7 +22,7 @@
       </v-toolbar-title>
     </div>
 
-    <v-spacer />
+    <v-spacer/>
     <v-toolbar-items>
       <v-flex
         align-center
@@ -44,39 +44,28 @@
         >
           <v-icon color="tertiary">mdi-view-dashboard</v-icon>
         </nuxt-link>
-        <v-menu
-          bottom
-          left
-          content-class="dropdown-menu"
-          offset-y
-          transition="slide-y-transition">
-          <router-link
-            v-ripple
-            v-slot:activator="{on}"
-            class="toolbar-items"
-            to="/notifications"
-          >
-            <v-badge
-              color="error"
-              overlap
-            >
-              <template slot="badge">
+        <v-menu bottom left content-class="dropdown-menu" offset-y transition="slide-y-transition">
+          <router-link v-ripple slot="activator" class="toolbar-items" to="/notifications">
+            <v-badge color="error" overlap>
+              <template v-slot="badge">
                 {{ notifications.length }}
               </template>
-              <v-icon color="tertiary">mdi-bell</v-icon>
+              <template v-slot:activator="{on}">
+              <v-icon @click="on" color="tertiary">mdi-bell</v-icon>
+              </template>
             </v-badge>
           </router-link>
           <v-card>
             <v-list dense>
-              <v-list-item
+              <v-list-tile
                 v-for="notification in notifications"
                 :key="notification"
                 @click="onClick"
               >
-                <v-list-item-title
+                <v-list-tile-title
                   v-text="notification"
                 />
-              </v-list-item>
+              </v-list-tile>
             </v-list>
           </v-card>
         </v-menu>
@@ -103,7 +92,7 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters, mapMutations } from 'vuex'
+  import {mapActions, mapGetters, mapMutations} from 'vuex'
 
   export default {
     data: () => ({
@@ -128,14 +117,14 @@
         setUsername: 'user/setUsername',
         setDrawer: 'app/setDrawer'
       }),
-        ...mapMutations({clearAll: 'CLEAR_ALL'}),
-      onClickBtn () {
+      ...mapMutations({clearAll: 'CLEAR_ALL'}),
+      onClickBtn() {
         this.setDrawer(!this.drawer)
       },
-      onClick () {
+      onClick() {
         // Do something
       },
-      onResponsiveInverted () {
+      onResponsiveInverted() {
         if (window.innerWidth < 991) {
           this.responsive = true
           this.responsiveInput = false
@@ -150,11 +139,11 @@
         this.$auth.logout();
       }
     },
-    mounted () {
+    mounted() {
       this.onResponsiveInverted()
       window.addEventListener('resize', this.onResponsiveInverted)
     },
-    beforeDestroy () {
+    beforeDestroy() {
       window.removeEventListener('resize', this.onResponsiveInverted)
     }
   }
