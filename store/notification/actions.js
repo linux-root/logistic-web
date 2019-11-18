@@ -9,7 +9,7 @@ export default {
       });
   },
 
-  pushNotification(){
-     this.$axios.post('/notifications')
+  pushNotification({commit}, notification){
+     this.$axios.post(`/notifications/${notification.notify_to}`, notification)
   }
 }
