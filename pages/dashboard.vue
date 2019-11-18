@@ -436,7 +436,7 @@
     },
     mounted() {
       this.$nextTick(() => {
-        /*this.dailySalesChart.options = {
+        this.dailySalesChart.options = {
           lineSmooth: this.$chartist.Interpolation.cardinal({
             tension: 0
           }),
@@ -461,7 +461,7 @@
             bottom: 0,
             left: 0
           }
-        };*/
+        };
       });
     },
       logout(){

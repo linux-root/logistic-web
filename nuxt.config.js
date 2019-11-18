@@ -34,7 +34,8 @@ export default {
   plugins: [
       '~/plugins/vuelidate',
       '~/plugins/chartist',
-      '~/plugins/vue-swal'
+      '~/plugins/vue-swal',
+      '~/plugins/vue-pusher'
   ],
   /*
   ** Nuxt.js dev-modules

@@ -72,7 +72,14 @@
                   return SHIPPER_MENU_ITEMS;
               }
           }
-      }
+      },
+
+   async mounted() {
+       const channel = this.$pusher.subscribe('my-channel', () => {
+         console.log('subscribe successfully ')
+       });
+       channel.bind('my-event', data => alert(JSON.stringify(data)));
+    }
   }
 </script>
 

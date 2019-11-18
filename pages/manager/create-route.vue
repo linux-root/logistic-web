@@ -139,6 +139,8 @@
             }),
 
             submit() {
+              this.$v.$touch()
+              if(this.$v.dirty) return;
                 const name = this.name;
                 const shipper = this.selectedShipper;
                 this.setRouteName(name)
