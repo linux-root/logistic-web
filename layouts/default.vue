@@ -15,6 +15,7 @@
   import coreToolbar from '~/components/core/AppToolbar';
   import coreDrawer from '~/components/core/AppDrawer';
   import coreView from '~/components/core/AppView';
+  import {mapActions} from 'vuex'
 
   const MANAGER_MENU_ITEMS = [
       {
@@ -74,11 +75,15 @@
           }
       },
 
+    methods: {
+      ...mapActions({addNotification: 'notification/addNotification'})
+    },
+
    async mounted() {
-       const channel = this.$pusher.subscribe('my-channel', () => {
+       const channel = this.$pusher.subscribe('notification', () => {
          console.log('subscribe successfully ')
        });
-       channel.bind('my-event', data => alert(JSON.stringify(data)));
+       channel.bind(this.$store.state.auth.user.id, data => this.$store.dispatch('notification/addNotification', data));
     }
   }
 </script>

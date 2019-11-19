@@ -1,5 +1,5 @@
 export default {
-   getShippers(state){
-       return state.shippers;
+   getNotifications(state){
+       return state.notifications;
    }
 }

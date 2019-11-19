@@ -11,5 +11,11 @@ export default {
 
   pushNotification({commit}, notification){
      this.$axios.post(`/notifications/${notification.notify_to}`, notification)
+  },
+
+  addNotification({commit}, notification){
+    if(notification.notify_to){
+      commit('ADD_NOTIFICATION', notification)
+    }
   }
 }

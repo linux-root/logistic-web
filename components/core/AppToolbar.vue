@@ -57,8 +57,8 @@
           </template>
           <v-card>
             <v-list dense>
-              <v-list-item v-for="notification in notifications" :key="notification" @click="onClick" >
-                <v-list-item-title v-text="notification" />
+              <v-list-item v-for="notification in notifications" :key="notification.id" @click="onClick" >
+                <v-list-item-title v-text="notification.message" />
               </v-list-item>
             </v-list>
           </v-card>
@@ -90,20 +90,21 @@
 
   export default {
     data: () => ({
-      notifications: [
-        'Mike, John responded to your email',
-        'You have 5 new tasks',
-        'You\'re now a friend with Andrew',
-        'Another Notification',
-        'Another One'
-      ],
+      // notifications: [
+      //   'Mike, John responded to your email',
+      //   'You have 5 new tasks',
+      //   'You\'re now a friend with Andrew',
+      //   'Another Notification',
+      //   'Another One'
+      // ],
       title: 'Dashboard',
       responsive: true,
       responsiveInput: true
     }),
     computed: {
       ...mapGetters({
-        drawer: 'app/getDrawer'
+        drawer: 'app/getDrawer',
+        notifications: 'notification/getNotifications'
       })
     },
     methods: {
