@@ -57,8 +57,8 @@
           </template>
           <v-card>
             <v-list dense>
-              <v-list-item v-for="notification in notifications" :key="notification.id" @click="onClick" >
-                <v-list-item-title v-text="notification.message" />
+              <v-list-item v-for="notification in notifications" :key="notification.id" @click="onClick" min-width="200px">
+                <v-list-item-title v-text="notification.message"  />
               </v-list-item>
             </v-list>
           </v-card>

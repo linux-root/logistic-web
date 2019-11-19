@@ -10,7 +10,7 @@ export default {
   },
 
   pushNotification({commit}, notification){
-     this.$axios.post(`/notifications/${notification.notify_to}`, notification)
+     this.$axios.post(`/users/${notification.notify_to}/notifications`, notification)
   },
 
   addNotification({commit}, notification){

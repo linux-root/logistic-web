@@ -7,8 +7,7 @@ export default {
         state.currentRoute.name = name;
     },
     ASSIGN_TO_SHIPPER(state, shipper) {
-        console.log(shipper)
-        state.assigned_to_shipper = shipper;
+        state.currentRoute.assigned_to_shipper = shipper;
     },
     SET_CHECKPOINT_NAME(state, {seq, name}) {
         const found = state.currentRoute.checkpoints.find(cp => cp.seq === seq);
