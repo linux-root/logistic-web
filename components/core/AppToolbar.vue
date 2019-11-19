@@ -47,7 +47,7 @@
         <v-menu bottom left content-class="dropdown-menu" offset-y transition="slide-y-transition">
           <template v-slot:activator="{on}">
             <span v-on="on" style="cursor: pointer">
-            <v-badge color="error" overlap >
+            <v-badge color="error" overlap v-if="notifications.length > 0">
               <template v-slot:badge>
                 {{ notifications.length}}
               </template>
