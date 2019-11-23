@@ -109,7 +109,7 @@
     },
     methods: {
       ...mapActions({
-        setUsername: 'user/setUsername',
+        setUser: 'user/setUser',
         setDrawer: 'app/setDrawer'
       }),
       ...mapMutations({clearAll: 'CLEAR_ALL'}),
@@ -129,7 +129,7 @@
         }
       },
       async logout() {
-        await this.setUsername(null);
+        await this.setUser(null);
         this.clearAll();
         this.$auth.logout();
       }

@@ -89,7 +89,7 @@
             }
         },
         name: "created-route",
-        middleware: 'auth',
+        middleware: ['auth','manager'],
         validations: {
             name: {required, maxLength: maxLength(50)},
             email: {required, email},

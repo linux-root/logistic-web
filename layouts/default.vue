@@ -40,8 +40,8 @@
       },
       {
           icon: 'mdi-ship-wheel',
-          text:'Tạo Route',
-          to: '/manager/create-route'
+          text:'Quản lý giao hàng',
+          to: '/manager/route-management'
       }
   ]
 
@@ -55,6 +55,16 @@
           icon: 'mdi-chart-bubble',
           text: 'inspire',
           to: '/inspire'
+      },
+      {
+          icon: 'mdi-update',
+          text: 'Cập nhật thông tin',
+          to: '/shipper/update-profile'
+      },
+      {
+          icon: 'mdi-update',
+          text: 'Route',
+          to: '/shipper/assigned-route'
       }
   ]
 

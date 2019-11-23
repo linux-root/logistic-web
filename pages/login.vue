@@ -23,6 +23,7 @@
 </template>
 
 <script>
+    import {mapActions} from 'vuex'
     import materialCard from '~/components/material/AppCard'
     export default {
         components: {
@@ -41,7 +42,8 @@
                 password: ''
             })
     ,
-        methods :{
+        methods : {
+            ...mapActions({setUser: 'user/setUser'}),
             login: function () {
                 console.log(this.email);
                 const that = this;
@@ -52,7 +54,11 @@
                                 password: that.password
                             }
                         }
-                    ).catch(error=>{
+                    ).then(() => {
+                        const user = this.$auth.user;
+                        console.log(user);
+                        this.setUser(user);
+                    }).catch(error=>{
                         console.log('statusCode', error.message)
                       this.$swal("Đã có lỗi xảy ra", error.message, 'warning');
                     })

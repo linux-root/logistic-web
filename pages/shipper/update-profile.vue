@@ -2,7 +2,7 @@
     <v-container fill-height fluid grid-list-xl>
         <v-layout justify-center wrap >
             <v-flex xs12 md8>
-                <material-card color="green" title="Đăng ký Shipper" text="Nhập thông tin Shipper" >
+                <material-card color="green" title="Cập nhật thông tin" text="Cập nhật thông tin của bạn" >
                     <v-form @submit.prevent="submit">
                         <v-container py-0>
                             <v-layout wrap>
@@ -17,7 +17,7 @@
                                     ></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 md6 >
-                                    <v-text-field v-model="email"
+                                    <v-text-field disabled v-model="email"
                                                   :error-messages="emailErrors"
                                                   label="E-mail"
                                                   required
@@ -56,7 +56,7 @@
                                         ></v-select>
 
                                         <v-btn type="submit" class="mx-0 font-weight-light" color="success" >
-                                            Đăng ký
+                                            Cập nhật
                                         </v-btn>
                                     </v-flex>
                             </v-layout>
@@ -70,8 +70,7 @@
 
 <script>
     import {required, email, minLength, between, maxLength, numeric} from 'vuelidate/lib/validators'
-    import axios from "../../.nuxt/axios";
-    const DEFAULT_PASSWORD = 'secret123'
+    import {mapGetters, mapActions} from 'vuex'
     import materialCard from '~/components/material/AppCard'
 
     export default {
@@ -79,13 +78,17 @@
             materialCard
         },
         name: "register-shipper",
-        middleware: ['auth','manager'],
+        middleware: 'auth',
         validations: {
                 name: {required, maxLength: maxLength(50)},
                 email: {required, email},
                 phone: {required, numeric},
                 select: {required},
                 citizenId: {required, numeric}
+        },
+
+        mounted(){
+           this.resetData()
         },
 
         data: () => ({
@@ -102,6 +105,7 @@
         }),
 
         computed: {
+            ...mapGetters({user: 'user/getUser'}),
             phoneErrors() {
                 const errors = []
                 if (!this.$v.phone.$dirty) return errors
@@ -139,22 +143,21 @@
         },
 
         methods: {
+            ...mapActions({updateUser: 'user/updateUser'}),
             submit() {
                 this.$v.$touch()
                 if(!this.$v.dirty){
-                    const newShipper = {
+                    const updatedUser = {
                         full_name : this.name,
                         email: this.email,
                         working_time: this.select,
                         phone: this.phone,
-                        citizen_id: parseInt(this.citizenId),
-                        is_active: false,
-                        is_manager: false,
-                        password: DEFAULT_PASSWORD
+                        citizen_id: parseInt(this.citizenId)
                     }
-                    this.$axios.post('/users', newShipper).then(res=>{
-                        console.log(res)
-                        this.$swal(`Đăng ký thành công tài khoản cho ${res.data.full_name}`,'', 'success');
+                    this.$axios.patch(`/users/${this.user.id}`, updatedUser).then(()=>{
+                        this.updateUser();
+                        this.resetData()
+                        this.$swal(`Cập nhật tài khoản thành công`,'', 'success');
                     })
                 }
             },
@@ -165,7 +168,14 @@
                 this.select = null
                 this.phone = null
                 this.citizenId = null
-            }
+            },
+           resetData(){
+               this.name = this.user.full_name;
+               this.email = this.user.email;
+               this.phone = this.user.phone;
+               this.citizenId = this.user.citizen_id;
+               this.select = this.user.working_time;
+           }
         }
     }
 </script>
