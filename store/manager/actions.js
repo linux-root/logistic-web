@@ -8,4 +8,10 @@ export default {
           commit('SET_SHIPPERS', res.data);
       });
   },
+
+  async fetchRoutes({commit}){
+    this.$axios.get('routes').then(res => {
+      commit('SET_ROUTES', res.data)
+    })
+  }
 }

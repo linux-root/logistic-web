@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height fluid grid-list-xl >
     <v-layout wrap>
-      <v-flex md12 sm12 lg4 >
+      <v-flex md12 sm12 lg6 >
         <material-chart-card :data="dailySalesChart.data" :options="dailySalesChart.options" color="info" type="Line" >
           <h4 class="title font-weight-light">Số lượng giao hàng hôm nay</h4>
           <p class="category d-inline-flex font-weight-light">
@@ -9,37 +9,18 @@
               mdi-arrow-up
             </v-icon>
             <span class="green--text">55%</span>&nbsp;
-            increase in today's sales
           </p>
 
           <template slot="actions">
             <v-icon class="mr-2" small >
               mdi-clock-outline
             </v-icon>
-            <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
+            <span class="caption grey--text font-weight-light">đã cập nhật 4 phút trước</span>
           </template>
         </material-chart-card>
       </v-flex>
-      <v-flex md12 sm12 lg4 >
-        <material-chart-card
-          :data="emailsSubscriptionChart.data"
-          :options="emailsSubscriptionChart.options"
-          :responsive-options="emailsSubscriptionChart.responsiveOptions"
-          color="red"
-          type="Bar"
-        >
-          <h4 class="title font-weight-light">Email Subscription</h4>
-          <p class="category d-inline-flex font-weight-light">Last Campaign Performance</p>
 
-          <template slot="actions">
-            <v-icon class="mr-2" small >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-          </template>
-        </material-chart-card>
-      </v-flex>
-      <v-flex md12 sm12 lg4 >
+      <v-flex md12 sm12 lg6 >
         <material-chart-card
           :data="dataCompletedTasksChart.data"
           :options="dataCompletedTasksChart.options"
@@ -53,49 +34,38 @@
             <v-icon class="mr-2" small >
               mdi-clock-outline
             </v-icon>
-            <span class="caption grey--text font-weight-light">campaign sent 26 minutes ago</span>
+            <span class="caption grey--text font-weight-light">lượt giao hàng cuối cùng 26 phút trước</span>
           </template>
         </material-chart-card>
       </v-flex>
-      <v-flex sm6 xs12 md6 lg3 >
+      <v-flex sm6 xs12 md6 lg4>
         <material-stats-card
           color="green"
           icon="mdi-store"
-          title="Revenue"
+          title="Doanh thu"
           value="$34,245"
           sub-icon="mdi-calendar"
-          sub-text="Last 24 Hours"
+          sub-text="24 giờ qua"
         />
       </v-flex>
-      <v-flex sm6 xs12 md6 lg3 >
+      <v-flex sm6 xs12 md6 lg4 >
         <material-stats-card
           color="orange"
-          icon="mdi-content-copy"
-          title="Used Space"
+          icon="mdi-account-tie"
+          title="Số shipper đang hoạt động"
           value="49/50"
-          small-value="GB"
-          sub-icon="mdi-alert"
-          sub-icon-color="error"
-          sub-text="Get More Space..."
+          small-value=""
+          sub-icon="mdi-user"
+          sub-text="..."
           sub-text-color="text-primary"
         />
       </v-flex>
-      <v-flex sm6 xs12 md6 lg3 >
+      <v-flex sm6 xs12 md6 lg4 >
         <material-stats-card color="red" icon="mdi-information-outline"
-          title="Fixed Issues"
+          title="Số đơn hàng không thành công"
           value="75"
-          sub-icon="mdi-tag"
-          sub-text="Tracked from Github"
-        />
-      </v-flex>
-      <v-flex sm6 xs12 md6 lg3 >
-        <material-stats-card
-          color="info"
-          icon="mdi-twitter"
-          title="Followers"
-          value="+245"
-          sub-icon="mdi-update"
-          sub-text="Just Updated"
+          sub-icon="mdi-car"
+          sub-text="Trong tháng"
         />
       </v-flex>
       <v-flex md12 lg6 >
@@ -219,9 +189,6 @@
                       </v-btn>
                       </template>
                     </v-tooltip>
-                      <span>Edit</span>
-                    </v-tooltip>
-
                     <v-tooltip top content-class="top">
                       <v-btn v-slot:activator="{on}"
                         class="v-btn--simple"

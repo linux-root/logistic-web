@@ -8,7 +8,6 @@
                     <v-btn  icon dark @click="close()">
                         <v-icon>mdi-close</v-icon>
                     </v-btn>
-                    <!--<v-toolbar-title text>Checkpoint</v-toolbar-title>-->
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark text @click="save()">Lưu lại</v-btn>
@@ -36,16 +35,9 @@
                                                     ></v-text-field>
                                                 </v-col>
                                                 <v-col cols="12" sm="6">
-                                                    <v-select
-                                                            :items="['0-17', '18-29', '30-54', '54+']"
-                                                            label="Hàng cần giao"
-                                                            required
-                                                    ></v-select>
-                                                </v-col>
-                                                <v-col cols="12" sm="6">
                                                     <v-autocomplete
                                                             :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                                                            label="Interests"
+                                                            label="Hàng cần giao"
                                                             multiple
                                                     ></v-autocomplete>
                                                 </v-col>
@@ -86,7 +78,7 @@
           notifications: false,
           sound: true,
           widgets: false,
-          checkpointName: 'Click để sửa'
+          checkpointName: ''
       }),
      computed: {
         ...mapGetters({

@@ -1,7 +1,19 @@
 
 export default {
+   async fetchCurrentCheckpoints({commit,state}){
+     if(state.currentRoute.id) {
+       const id = state.currentRoute.id
+       console.log('fetching route: ', state.currentRoute.id)
+         return this.$axios.get(`/routes/${id}/checkpoints`).then(res => {
+           commit('SET_CHECKPOINTS', res.data)
+         })
+       }
+    },
     setCurrentRoute({commit}, route) {
         commit('SET_CURRENT_ROUTE', route)
+    },
+    setRouteId({commit}, id){
+        commit('SET_ROUTE_ID', id);
     },
     setRouteName({commit}, name) {
         commit('SET_ROUTE_NAME', name)
@@ -26,7 +38,6 @@ export default {
     },
     storeCurrentRoute({commit, state, dispatch}) {
         const {checkpoints, ...routeWithoutCheckpoints} = state.currentRoute;
-        console.log('saved route', routeWithoutCheckpoints)
         this.$axios.post('/routes', routeWithoutCheckpoints).then(res => {
             const routeId = res.data.id;
             const savedRoute = res.data;
@@ -39,11 +50,11 @@ export default {
               }
               console.log('notify', notification)
               dispatch('notification/pushNotification', notification, {root: true});
-
             }
 
             checkpoints.forEach(cp => {
                 delete cp.seq
+                cp.route_id = routeId;
                 this.$axios.post(`routes/${routeId}/checkpoints`, cp).then(res => {
                     console.log('saved checkpoint', res.data)
                 })

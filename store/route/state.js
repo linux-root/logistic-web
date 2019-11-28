@@ -1,5 +1,6 @@
 export default () => ({
   currentRoute: {
+      id: '',
       name : '',
       checkpoints: [],
       status: 'P',

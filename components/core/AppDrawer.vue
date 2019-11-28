@@ -30,7 +30,7 @@
               />
             </v-list-item-avatar>
             <v-list-item-title class="title">
-              {{$auth.user.full_name}}
+              {{role}}
             </v-list-item-title>
           </v-list-item>
         </v-list>
@@ -77,7 +77,7 @@
 
     data() {
       return {
-        logo: '/vuetifylogo.png',
+        logo: '/favicon.ico',
         responsive: true
       }
     },
@@ -87,6 +87,8 @@
         color: 'app/getColor',
         drawer: 'app/getDrawer'
       }),
+
+        role(){return  'Logistic'},
 
 
       inputValue: {
