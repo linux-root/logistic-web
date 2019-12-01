@@ -6,7 +6,7 @@
         <v-dialog v-model="dialog" fullscreen  transition="dialog-bottom-transition">
           <v-card>
             <v-toolbar dark color="success">
-              <v-btn  icon dark @click="close()">
+              <v-btn  icon dark @click="close">
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </v-toolbar>
@@ -18,8 +18,8 @@
                     <v-card-title>
                       <span class="headline">Active Route : {{currentRoute.name}}. Đang được thực hiện bởi Shipper : Hà Hữu Vinh </span>
                     </v-card-title>
-                    <v-card-text>>
-                      <live-tracking/>
+                    <v-card-text>
+                      <live-tracking ref="liveTracking"/>
                     </v-card-text>
                   </v-card>
                 </v-flex>
@@ -27,7 +27,6 @@
             </v-container>
           </v-card>
         </v-dialog>
-
 
         <material-card color="green" flat full-width title="Vận đơn đang được thực hiện"
           text="Here is a subtitle for this table" >
@@ -45,7 +44,7 @@
     import {mapGetters, mapActions} from 'vuex'
     export default {
         name: 'active-route',
-        middleware: 'auth',
+        middleware:'auth',
         components: {
             materialCard,
             liveTracking
@@ -89,19 +88,39 @@
         methods: {
             ...mapActions({
                 setCurrentRoute: 'route/setCurrentRoute',
-                setRouteId: 'route/setRouteId',
                 fetchCurrentRoute:  'route/fetchCurrentRoute',
                 clearRouteData: 'route/clearRouteData',
+                fetchCurrentCheckpoints: 'route/fetchCurrentCheckpoints',
             }),
             async openDialog(event){
-                await this.setRouteId(event.id)
-                this.dialog = !this.dialog
+                const selectedRoute = {
+                    id: event.id,
+                    name: event.name,
+                    assigned_to_shipper: event.assigned_to_shipper,
+                    checkpoints: []
+                }
+                await this.setCurrentRoute(selectedRoute)
+                this.fetchCurrentCheckpoints().then(()=> {
+                    this.initMap()
+                    this.dialog = !this.dialog
+                })
             },
-
             close(){
                 this.dialog = false;
                 this.clearRouteData()
-            }
+            },
+            initMap() {
+                if(!this.$refs.liveTracking) return
+                //access child component method
+                this.$refs.liveTracking.initMap()
+        }
         }
     }
 </script>
+
+<style scoped>
+  #map {
+    height: 500px;  /* The height is 400 pixels */
+    width: 100%;  /* The width is the width of the web page */
+  }
+</style>

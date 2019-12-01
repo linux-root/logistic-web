@@ -1,20 +1,12 @@
 <template>
-      <div ref="map" id="map"/>
+<div ref="map" id="map"/>
 </template>
 
 <script>
   import {mapGetters, mapActions} from 'vuex'
     export default {
-        name: "live-tracking",
-        mounted(){
-            console.log('hihi')
-           this.initMap();
-
-        },
+      name: "live-tracking",
       props: ['route'],
-      data: ()=>({
-
-      }),
       computed:{
           ...mapGetters({
             labelIndex: 'map/getMarkerLabelIndex',
@@ -22,30 +14,31 @@
               checkpoints: 'route/getCurrentCheckpoints'
           })
       },
+        mounted(){
+          this.initMap()
+        },
       methods: {
           ...mapActions({
             setMarkerCoordinate: 'map/setMarkerCoordinate',
             increaseMarkerLabelIndex: 'map/increaseMarkerLabelIndex',
-              fetchCurrentCheckpoints: 'route/fetchCurrentCheckpoints'
           }),
-       async  initMap() {
-             await this.fetchCurrentCheckpoints();
-            const mapCenter = this.currentRoute.checkpoints[0].geo_coordinate;
+          initMap() {
+            const mapCenter = this.checkpoints[0];
+            console.log({mapCenter})
             var directionsService = new this.$google.maps.DirectionsService();
             var directionsRenderer = new this.$google.maps.DirectionsRenderer();
             let infoWindow = new this.$google.maps.InfoWindow;
 
-            const map = new this.$google.maps.Map(this.$refs.map, {zoom: 15, center: mapCenter});
+            const map = new this.$google.maps.Map(this.$refs.map, {zoom: 15, center: mapCenter.geo_coordinate});
 
             directionsRenderer.setMap(map);
 
-            const checkpoints = this.currentRoute.checkpoints;
+            const checkpoints = this.checkpoints;
 
             const p1 = checkpoints[0]
             const p2 = checkpoints[1]
             const p3 = checkpoints[2]
             const shipperP = {lat: 21.003696,lng: 105.818860};
-            console.log(checkpoints)
 
             infoWindow.setPosition(shipperP);
             infoWindow.setContent('Hà Hữu Vinh');
@@ -56,7 +49,8 @@
                     origin: p1.geo_coordinate,
                     destination: p2.geo_coordinate,
                     waypoints: waypoint,
-                    travelMode: 'DRIVING'
+                    travelMode: 'DRIVING',
+                    optimizeWaypoints: true
                 },
                 function (response, status) {
                     if (status === 'OK') {

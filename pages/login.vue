@@ -58,9 +58,13 @@
                         const user = this.$auth.user;
                         console.log(user);
                         this.setUser(user);
+                    }).then(res => {
+                        console.log(res)
                     }).catch(error=>{
-                        console.log('statusCode', error.message)
-                      this.$swal("Đã có lỗi xảy ra", error.message, 'warning');
+                        const errorCode = error.message.substr(error.message.length - 3, 3)
+                        console.log({errorCode})
+                        const errorMessage = (errorCode == 401 || errorCode == 422) ? 'Sai Email hoặc mật khẩu' : 'Không thể kết nối tới Backend';
+                      this.$swal("Đã có lỗi xảy ra", errorMessage, 'warning');
                     })
 
             }

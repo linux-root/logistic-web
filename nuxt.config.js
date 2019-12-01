@@ -1,5 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
-
+require('dotenv').config()
 const GOOGLE_MAP_API_KEY = 'AIzaSyAhAV2NWcLitLKgc_3_uo7BmPOuMT5JhKE'
 
 export default {
@@ -83,7 +83,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://localhost:3000/'
+    baseURL: process.env.BACK_END_API
   },
   /*
   ** vuetify module configuration
