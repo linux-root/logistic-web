@@ -6,9 +6,9 @@
   import {mapGetters, mapActions} from 'vuex'
     export default {
         name: "google-map",
-       async mounted(){
+        mounted(){
            console.log('mounted googleMap');
-           await this.initMap();
+           this.initMap();
         },
       props: ['checkpoint'],
       data: ()=>({

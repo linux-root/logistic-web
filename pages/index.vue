@@ -21,7 +21,13 @@ export default {
     Logo,
   },
     computed: {
-        ...mapGetters({user: 'user/getUser', role: 'user/getRole'})
+       user (){
+           return this.$store.state.auth.user
+       },
+
+        role(){
+           return this.$store.state.auth.user.is_manager ? 'Manager': 'Shipper'
+        }
     }
 }
 </script>

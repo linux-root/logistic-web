@@ -77,6 +77,7 @@
         },
         fetch({store}){
             store.dispatch('manager/fetchShippers')
+            store.dispatch('route/clearRouteData')
         },
 
         data: () => ({

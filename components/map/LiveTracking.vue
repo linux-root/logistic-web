@@ -24,7 +24,7 @@
           }),
           initMap() {
             const mapCenter = this.checkpoints[0];
-            console.log({mapCenter})
+            console.log('center', mapCenter.geo_coordinate)
             var directionsService = new this.$google.maps.DirectionsService();
             var directionsRenderer = new this.$google.maps.DirectionsRenderer();
             let infoWindow = new this.$google.maps.InfoWindow;
@@ -35,19 +35,21 @@
 
             const checkpoints = this.checkpoints;
 
-            const p1 = checkpoints[0]
-            const p2 = checkpoints[1]
-            const p3 = checkpoints[2]
+            const startCheckpoint = checkpoints.filter(cp => cp.seq == 1)[0]
+              console.log(startCheckpoint)
             const shipperP = {lat: 21.003696,lng: 105.818860};
 
             infoWindow.setPosition(shipperP);
             infoWindow.setContent('Hà Hữu Vinh');
             infoWindow.open(map)
-           const waypoint = [{location:  p3.geo_coordinate, stopover :true}];
+           const waypoint = checkpoints.filter(cp => cp.seq != 1).map(cp => ({
+               location: cp.geo_coordinate
+           }))
+
             directionsService.route(
                 {
-                    origin: p1.geo_coordinate,
-                    destination: p2.geo_coordinate,
+                    origin: startCheckpoint.geo_coordinate,
+                    destination: checkpoints[checkpoints.length -1].geo_coordinate,
                     waypoints: waypoint,
                     travelMode: 'DRIVING',
                     optimizeWaypoints: true
