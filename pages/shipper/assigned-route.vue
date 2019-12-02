@@ -1,27 +1,10 @@
 <template>
-  <v-container
-    fill-height
-    fluid
-    grid-list-xl
-  >
+  <v-container fill-height fluid grid-list-xl >
     <v-layout justify-center wrap >
       <v-flex md12 >
-        <material-card
-          color="green"
-          flat
-          full-width
-          title="Vận đơn được gán"
+        <material-card color="green" flat full-width title="Vận đơn được gán cho bạn"
           text="Here is a subtitle for this table" >
-          <v-data-table :headers="headers" :items="items.slice(0, 7)" hide-actions >
-            <template slot="headerCell" slot-scope="{ header }" >
-              <span class="subheading font-weight-light text--darken-3" v-text="header.text" />
-            </template>
-            <template slot="items" slot-scope="{ item }" >
-              <td>{{ item.name }}</td>
-              <td>{{ item.country }}</td>
-              <td>{{ item.city }}</td>
-              <td class="text-xs-right">{{ item.salary }}</td>
-            </template>
+          <v-data-table :headers="headers" :items="this.assignedRoutes" hide-default-footer>
           </v-data-table>
         </material-card>
       </v-flex>
@@ -31,11 +14,20 @@
 
 <script>
     import materialCard from '~/components/material/AppCard'
+    import {mapGetters, mapActions} from 'vuex'
 
     export default {
         name: 'assigned-route',
         components: {
             materialCard
+        },
+        fetch({store}){
+            store.dispatch('shipper/fetchAssignedRoutes')
+        },
+        computed: {
+            ...mapGetters({
+                assignedRoutes: 'shipper/getAssignedRoutes'
+            })
         },
         data: () => ({
             headers: [

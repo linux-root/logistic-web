@@ -34,7 +34,7 @@ export default {
   plugins: [
       '~/plugins/vuelidate',
       '~/plugins/chartist',
-      '~/plugins/vue-swal',
+      '~/plugins/sweetalert2',
       '~/plugins/vue-pusher'
   ],
   /*

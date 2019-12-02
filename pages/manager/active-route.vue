@@ -111,16 +111,9 @@
             },
             initMap() {
                 if(!this.$refs.liveTracking) return
-                //access child component method
-                this.$refs.liveTracking.initMap()
+                this.$refs.liveTracking.initMap() //access child component method
         }
         }
     }
 </script>
 
-<style scoped>
-  #map {
-    height: 500px;  /* The height is 400 pixels */
-    width: 100%;  /* The width is the width of the web page */
-  }
-</style>
