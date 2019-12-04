@@ -2,9 +2,32 @@
   <v-container fill-height fluid grid-list-xl >
     <v-layout justify-center wrap >
       <v-flex md12 >
+        <v-dialog v-model="dialog" fullscreen  transition="dialog-bottom-transition">
+          <v-card>
+            <v-toolbar dark color="success">
+              <v-btn  icon dark @click="close">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </v-toolbar>
+
+            <v-container fluid>
+              <v-layout wrap>
+                <v-flex xs12 md12>
+                  <v-card>
+                <!--    <v-card-title>
+                      <span class="headline">{{currentRoute.name}}</span>
+                    </v-card-title>-->
+                      <navigation ref="navigation"/>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card>
+        </v-dialog>
+
         <material-card color="green" flat full-width title="Vận đơn được gán cho bạn"
           text="Here is a subtitle for this table" >
-          <v-data-table :headers="headers" :items="this.assignedRoutes" hide-default-footer>
+          <v-data-table @click:row="selectRoute($event)" :headers="headers" :items="this.assignedRoutes" hide-default-footer>
           </v-data-table>
         </material-card>
       </v-flex>
@@ -14,22 +37,26 @@
 
 <script>
     import materialCard from '~/components/material/AppCard'
+    import navigation from'~/components/map/Navigation'
     import {mapGetters, mapActions} from 'vuex'
 
     export default {
         name: 'assigned-route',
         components: {
-            materialCard
+            materialCard,
+            navigation
         },
         fetch({store}){
             store.dispatch('shipper/fetchAssignedRoutes')
         },
         computed: {
             ...mapGetters({
-                assignedRoutes: 'shipper/getAssignedRoutes'
+                assignedRoutes: 'shipper/getAssignedRoutes',
+                currentRoute: 'route/getCurrentRoute'
             })
         },
         data: () => ({
+            dialog: false,
             headers: [
                 {
                     sortable: false,
@@ -39,54 +66,70 @@
                 {
                     sortable: false,
                     text: 'Trạng thái',
-                    value: 'country'
+                    value: 'status'
                 },
                 {
                     sortable: false,
                     text: 'Người tạo',
-                    value: 'city'
-                },
-                {
-                    sortable: false,
-                    text: 'Salary',
-                    value: 'salary',
-                    align: 'right'
+                    value: 'created_by'
                 }
             ],
-            items: [
-                {
-                    name: 'Dakota Rice',
-                    country: 'Niger',
-                    city: 'Oud-Tunrhout',
-                    salary: '$35,738'
-                },
-                {
-                    name: 'Minerva Hooper',
-                    country: 'Curaçao',
-                    city: 'Sinaai-Waas',
-                    salary: '$23,738'
-                }, {
-                    name: 'Sage Rodriguez',
-                    country: 'Netherlands',
-                    city: 'Overland Park',
-                    salary: '$56,142'
-                }, {
-                    name: 'Philip Chanley',
-                    country: 'Korea, South',
-                    city: 'Gloucester',
-                    salary: '$38,735'
-                }, {
-                    name: 'Doris Greene',
-                    country: 'Malawi',
-                    city: 'Feldkirchen in Kārnten',
-                    salary: '$63,542'
-                }, {
-                    name: 'Mason Porter',
-                    country: 'Chile',
-                    city: 'Gloucester',
-                    salary: '$78,615'
+        }),
+        methods: {
+            ...mapActions({
+                setCurrentRoute: 'route/setCurrentRoute',
+                fetchCurrentRoute:  'route/fetchCurrentRoute',
+                clearRouteData: 'route/clearRouteData',
+                fetchCurrentCheckpoints: 'route/fetchCurrentCheckpoints',
+                refuseRoute : 'shipper/refuseRoute',
+                acceptRoute: 'shipper/acceptRoute'
+            }),
+            selectRoute(event){
+                this.$swal.fire({
+                    title: 'Xác nhận giao hàng',
+                    text: `Tên Route: ${event.name}. ID: ${event.id}`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Bắt đầu',
+                    cancelButtonText: 'Từ chối'
+                }).then((result) => {
+                    if (!result.value) {
+                        this.$swal.fire(
+                            'Đã từ chối',
+                            `Từ chối Route ${event.name}`,
+                            'info'
+                        )
+                        this.refuseRoute(event.id);
+                    }
+                    else {
+                        this.acceptRoute(event.id)
+                        this.openDialog(event)
+                    }
+                })
+            },
+            async openDialog(event){
+                const selectedRoute = {
+                    id: event.id,
+                    name: event.name,
+                    assigned_to_shipper: event.assigned_to_shipper,
+                    checkpoints: []
                 }
-            ]
-        })
+                await this.setCurrentRoute(selectedRoute)
+                this.fetchCurrentCheckpoints().then(()=> {
+                    this.initMap()
+                    this.dialog = !this.dialog
+                })
+            },
+            close(){
+                this.dialog = false;
+                this.clearRouteData()
+            },
+            initMap() {
+                if(!this.$refs.navigation) return
+                this.$refs.navigation.initMap() //access child component method
+            }
+        }
     }
 </script>

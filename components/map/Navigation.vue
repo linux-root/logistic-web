@@ -6,7 +6,7 @@
     import {mapGetters, mapActions} from 'vuex'
 
     export default {
-        name: "live-tracking",
+        name: "navigation",
         props: ['route'],
         computed: {
             ...mapGetters({
@@ -14,33 +14,18 @@
                 currentRoute: 'route/getCurrentRoute',
                 checkpoints: 'route/getCurrentCheckpoints'
             })
-        },
-        data: () => ({
-            shipperPosition: null
-
-        })
+        }
         ,
         async mounted() {
-            console.log('mounting Live Tracking')
+            console.log('mounting Navigation')
             await this.initMap()
-            const channel = await this.$pusher.subscribe('shipper-position', () => {
-                console.log('subscribe successfully ')
-            });
-            const shipperId = this.currentRoute.assigned_to_shipper
-            console.log({shipperId})
-            channel.bind(shipperId, data => {
-                console.log({data})
-                this.shipperPosition.setPosition(data)
-            });
         },
         methods: {
             ...mapActions({
-                setMarkerCoordinate: 'map/setMarkerCoordinate',
-                increaseMarkerLabelIndex: 'map/increaseMarkerLabelIndex',
+                sendLocation: 'shipper/sendLocation'
             }),
             initMap() {
                 const mapCenter = this.checkpoints[0];
-                console.log('center', mapCenter.geo_coordinate)
                 var directionsService = new this.$google.maps.DirectionsService();
                 var directionsRenderer = new this.$google.maps.DirectionsRenderer();
 
@@ -48,23 +33,21 @@
 
                 directionsRenderer.setMap(map);
 
+
+                this.$google.maps.event.addListener(map, 'dbclick',  (event) => {
+                     console.log(event)
+                     const location = {
+                         shipper_id: this.$store.state.auth.user.id,
+                         lat: event.latLng.lat(),
+                         lng: event.latLng.lng()
+                     }
+                     console.log({location})
+                     this.sendLocation(location)
+                });
                 const checkpoints = this.checkpoints;
 
                 const startCheckpoint = checkpoints.filter(cp => cp.seq == 1)[0]
-                const img ='/position.png'
 
-                this.shipperPosition = new this.$google.maps.Marker({
-                    position: {
-                        lat: startCheckpoint.geo_coordinate.lat + 0.0000005,
-                        lng: startCheckpoint.geo_coordinate.lng + 0.0000006
-                    },
-                    map: map,
-                    icon: img
-                })
-
-                // infoWindow.setPosition(shipperP);
-                // infoWindow.setContent('Hà Hữu Vinh');
-                // infoWindow.open(map)
                 const waypoint = checkpoints.filter(cp => cp.seq != 1).map(cp => ({
                     location: cp.geo_coordinate
                 }))

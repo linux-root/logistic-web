@@ -7,6 +7,6 @@ export default {
      return state.routes;
   },
   getActiveRoutes(state){
-     return state.routes.filter(e => e.status === 'P');
+     return state.routes.filter(e => e.status === 'A');
   }
 }

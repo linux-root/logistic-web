@@ -90,13 +90,6 @@
 
   export default {
     data: () => ({
-      // notifications: [
-      //   'Mike, John responded to your email',
-      //   'You have 5 new tasks',
-      //   'You\'re now a friend with Andrew',
-      //   'Another Notification',
-      //   'Another One'
-      // ],
       title: 'Dashboard',
       responsive: true,
       responsiveInput: true
@@ -117,7 +110,7 @@
         this.setDrawer(!this.drawer)
       },
       onClick() {
-        // Do something
+        this.$router.push('/shipper/assigned-route')
       },
       onResponsiveInverted() {
         if (window.innerWidth < 991) {

@@ -27,6 +27,7 @@ export default {
   ** Global CSS
   */
   css: [
+    '~/assets/animate.css'
   ],
   /*
   ** Plugins to load before mounting the App
