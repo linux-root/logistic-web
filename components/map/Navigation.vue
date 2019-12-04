@@ -29,13 +29,20 @@
                 var directionsService = new this.$google.maps.DirectionsService();
                 var directionsRenderer = new this.$google.maps.DirectionsRenderer();
 
-                const map = new this.$google.maps.Map(this.$refs.map, {zoom: 15, center: mapCenter.geo_coordinate});
+                const map = new this.$google.maps.Map(this.$refs.map, {
+                    zoom: 15,
+                    center: mapCenter.geo_coordinate,
+                    clickableIcons: false,
+                    disableDoubleClickZoom: true,
+                    gestureHandling: 'none'
+                });
 
                 directionsRenderer.setMap(map);
 
 
-                this.$google.maps.event.addListener(map, 'dbclick',  (event) => {
+                this.$google.maps.event.addListener(map, 'click',  (event) => {
                      console.log(event)
+                    event.stop()
                      const location = {
                          shipper_id: this.$store.state.auth.user.id,
                          lat: event.latLng.lat(),
