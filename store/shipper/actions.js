@@ -26,6 +26,7 @@ export default {
     const route = state.assignedRoutes.filter(r => r.id === id)[0];
     const notification = {
       message: `Shipper ${currentUser.full_name} đã bắt đầu giao Route ${route.name}`,
+      status: 'U',
       created_by: currentUser.id,
       notify_to: route.created_by
     }

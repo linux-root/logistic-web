@@ -12,7 +12,7 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-layout justify-center align-center>
-                                <v-btn color="success" @click.prevent="login">Login</v-btn>
+                                <v-btn color="success" @click.prevent="login">Đăng nhập</v-btn>
                             </v-layout>
                         </v-card-actions>
                     </material-card>

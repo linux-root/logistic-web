@@ -47,9 +47,10 @@
         <v-menu bottom left content-class="dropdown-menu" offset-y transition="slide-y-transition">
           <template v-slot:activator="{on}">
             <span v-on="on" style="cursor: pointer">
-            <v-badge color="error" overlap v-if="notifications.length > 0">
+              <v-icon v-if="unreadNotifications.length === 0" color="tertiary">mdi-bell</v-icon>
+            <v-badge color="error" overlap v-if="unreadNotifications.length > 0">
               <template v-slot:badge>
-                {{ notifications.length}}
+                {{ unreadNotifications.length}}
               </template>
               <v-icon color="tertiary">mdi-bell</v-icon>
             </v-badge>
@@ -57,7 +58,7 @@
           </template>
           <v-card>
             <v-list dense>
-              <v-list-item v-for="notification in notifications" :key="notification.id" @click="onClick" min-width="200px">
+              <v-list-item v-for="notification in notifications" :key="notification.id" @click="onClick($event)" min-width="200px">
                 <v-list-item-title v-text="notification.message"  />
               </v-list-item>
             </v-list>
@@ -71,13 +72,7 @@
         >
           <v-icon color="tertiary">mdi-account</v-icon>
         </nuxt-link>
-        <nuxt-link
-          v-ripple
-          class="toolbar-items"
-          to="/"
-          title="Logout"
-          @click.native="logout"
-        >
+        <nuxt-link v-ripple class="toolbar-items" to="/" title="Logout" @click.native="logout" >
           <v-icon color="tertiary">mdi-logout</v-icon>
         </nuxt-link>
       </v-flex>
@@ -94,23 +89,32 @@
       responsive: true,
       responsiveInput: true
     }),
+
+      fetch({store}){
+         store.dispatch('notification/fetchNotifications')
+      },
     computed: {
-      ...mapGetters({
-        drawer: 'app/getDrawer',
-        notifications: 'notification/getNotifications'
-      })
+        ...mapGetters({
+            drawer: 'app/getDrawer',
+            notifications: 'notification/getNotifications',
+            unreadNotifications: 'notification/getUnreadNotifications'
+        }),
     },
     methods: {
       ...mapActions({
-        setUser: 'user/setUser',
-        setDrawer: 'app/setDrawer'
+          setUser: 'user/setUser',
+          setDrawer: 'app/setDrawer',
+          readNotification: 'notification/readNotification'
       }),
       ...mapMutations({clearAll: 'CLEAR_ALL'}),
       onClickBtn() {
         this.setDrawer(!this.drawer)
       },
-      onClick() {
-        this.$router.push('/shipper/assigned-route')
+      onClick(event) {
+          console.log(event)
+          //if unread
+      //    this.readNotification()
+          this.$router.push('/shipper/assigned-route')
       },
       onResponsiveInverted() {
         if (window.innerWidth < 991) {
