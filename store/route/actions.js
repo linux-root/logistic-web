@@ -47,6 +47,7 @@ export default {
               const notification = {
                 message: `Bạn đã được gán cho một đơn hàng ${routeId}`,
                 status: 'U',
+                type: 'A',
                 created_by: savedRoute.created_by,
                 notify_to: savedRoute.assigned_to_shipper
               }

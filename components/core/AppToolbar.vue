@@ -58,7 +58,7 @@
           </template>
           <v-card>
             <v-list dense>
-              <v-list-item v-for="notification in notifications" :key="notification.id" @click="onClick($event)" min-width="200px">
+              <v-list-item v-for="notification in notifications" :key="notification.id" @click="onClick(notification)" min-width="200px">
                 <v-list-item-title v-text="notification.message"  />
               </v-list-item>
             </v-list>
@@ -110,11 +110,16 @@
       onClickBtn() {
         this.setDrawer(!this.drawer)
       },
-      onClick(event) {
-          console.log(event)
+      onClick(notification) {
+          console.log(notification)
           //if unread
-      //    this.readNotification()
-          this.$router.push('/shipper/assigned-route')
+          this.readNotification(notification)
+          if(notification.type === 'A'){
+              this.$router.push('/shipper/assigned-route')
+          }
+          else if(notification.type === 'R') {
+              this.$router.push('/manager/active-route')
+          }
       },
       onResponsiveInverted() {
         if (window.innerWidth < 991) {

@@ -18,8 +18,7 @@ export default {
   },
 
   readNotification({commit}, notification){
-    notification.status = 'S';
-    this.$axios.patch(`/notifications/${notification.id}`)
     commit('CHANGE_NOTIFICATION_STATUS', notification.id)
+    this.$axios.patch(`/notifications/${notification.id}`, notification)
   }
 }
