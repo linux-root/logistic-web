@@ -35,8 +35,8 @@
       },
       {
           icon: 'mdi-account-card-details',
-          text: 'Đăng ký shipper',
-          to: '/manager/register-shipper'
+          text: 'Quản lý tài khoản',
+          to: '/manager/account-management'
       },
       {
           icon: 'mdi-ship-wheel',

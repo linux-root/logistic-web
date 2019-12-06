@@ -114,10 +114,10 @@
           console.log(notification)
           //if unread
           this.readNotification(notification)
-          if(notification.type === 'A'){
+          if(notification.notification_type === 'A'){
               this.$router.push('/shipper/assigned-route')
           }
-          else if(notification.type === 'R') {
+          else if(notification.notification_type === 'R') {
               this.$router.push('/manager/active-route')
           }
       },

@@ -14,7 +14,7 @@ export default {
     const notification = {
       message: `Shipper ${currentUser.full_name} đã từ chối giao Route ${route.name}`,
       status: 'U',
-      type: 'R',
+      notification_type: 'R',
       created_by: currentUser.id,
       notify_to: route.created_by
     }
@@ -29,7 +29,7 @@ export default {
     const notification = {
       message: `Shipper ${currentUser.full_name} đã bắt đầu giao Route ${route.name}`,
       status: 'U',
-      type: 'R',
+      notification_type: 'R',
       created_by: currentUser.id,
       notify_to: route.created_by
     }

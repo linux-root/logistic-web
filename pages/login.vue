@@ -63,7 +63,7 @@
                     }).catch(error=>{
                         const errorCode = error.message.substr(error.message.length - 3, 3)
                         console.log({errorCode})
-                        const errorMessage = (errorCode == 401 || errorCode == 422) ? 'Sai Email hoặc mật khẩu' : 'Không thể kết nối tới Backend';
+                        const errorMessage = (errorCode == 401 || errorCode == 422) ? 'Sai Email hoặc mật khẩu' : (errorCode == 409 ? 'Tài khoản đã bị vô hiệu hóa' : 'Không thể kết nối tới Backend');
                       this.$swal("Đã có lỗi xảy ra", errorMessage, 'warning');
                     })
 

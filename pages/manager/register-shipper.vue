@@ -148,13 +148,13 @@
                         working_time: this.select,
                         phone: this.phone,
                         citizen_id: parseInt(this.citizenId),
-                        is_active: false,
+                        is_active: true,
                         is_manager: false,
                         password: DEFAULT_PASSWORD
                     }
                     this.$axios.post('/users', newShipper).then(res=>{
                         console.log(res)
-                        this.$swal(`Đăng ký thành công tài khoản cho ${res.data.full_name}`,'', 'success');
+                        this.$swal(`Đăng ký thành công tài khoản Shipper cho ${res.data.full_name}`,'', 'success');
                     })
                 }
             },
