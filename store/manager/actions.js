@@ -29,5 +29,9 @@ export default {
       id: id
     }
     return this.$axios.patch(`/users/${id}`, account).then(()=> commit('CHANGE_SHIPPER_ACCOUNT_STATUS', account))
+  },
+
+  assignedShipper({commit}, route){
+
   }
 }

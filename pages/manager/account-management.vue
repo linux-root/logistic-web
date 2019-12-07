@@ -9,10 +9,10 @@
             icon="mdi-account"
             title="Tạo Tài khoản"
             value="Shipper"
-            sub-icon="mdi-view-grid-plus"
+            sub-icon="mdi-account-plus"
             sub-icon-color="green"
             sub-text="Tạo mới tài khoản cho Shipper"
-            sub-text-color="text-primary"
+            sub-text-color="green--text"
           />
         </nuxt-link>
       </v-flex>
@@ -26,9 +26,9 @@
             value="Manager"
             small-value=""
             sub-icon="mdi-view-grid-plus"
-            sub-icon-color="green"
+            sub-icon-color="blue"
             sub-text="Tạo mới tài khoản cho Manager"
-            sub-text-color="text-primary"
+            sub-text-color="blue--text"
           />
         </nuxt-link>
       </v-flex>
@@ -42,9 +42,9 @@
             value="Shipper"
             small-value=""
             sub-icon="mdi-account-alert"
-            sub-icon-color="orange"
+            sub-icon-color="red"
             sub-text="vô hiệu hóa tài khoản"
-            sub-text-color="text-primary"
+            sub-text-color="red--text"
           />
         </nuxt-link>
       </v-flex>

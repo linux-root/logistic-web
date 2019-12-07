@@ -104,7 +104,7 @@ export default {
           error: colors.deepOrange.accent4,
           success: colors.green.accent3
         },
-          default: {
+          /*default: {
               primary: '#4caf50',
               secondary: '#4caf50',
               tertiary: '#495057',
@@ -113,7 +113,7 @@ export default {
               info: '#00d3ee',
               success: '#5cb860',
               warning: '#ffa21a'
-          }
+          }*/
       }
     }
   },

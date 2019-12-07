@@ -26,7 +26,7 @@
     import liveTracking from '~/components/map/LiveTracking'
     import {mapGetters, mapActions} from 'vuex'
     export default {
-        name: 'active-route',
+        name: 'disable-account',
         middleware:'auth',
         components: {
             materialCard,

@@ -123,9 +123,12 @@
                 const name = this.name;
                 const shipper = this.selectedShipper;
                 this.setRouteName(name)
-                this.assignToShipper(shipper.id);
+                if(shipper){
+                    this.assignToShipper(shipper.id);
+                }
                 this.storeCurrentRoute().then(()=>{
-                   this.$swal('Tạo thành công Route', `Tên: ${name} \n Shipper: ${shipper.full_name}`, 'success');
+                    const mesg=shipper ?  `Tên: ${name} \n Shipper: ${shipper.full_name}`: `Tên: ${name}`
+                    this.$swal('Tạo thành công Route',mesg, 'success');
                 });
                 this.clearRouteData();
                 this.resetData();

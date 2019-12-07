@@ -39,6 +39,7 @@ export default {
     },
     storeCurrentRoute({commit, state, dispatch}) {
         const {checkpoints, ...routeWithoutCheckpoints} = state.currentRoute;
+        routeWithoutCheckpoints.status = routeWithoutCheckpoints.assigned_to_shipper ? 'P' : 'U'
         this.$axios.post('/routes', routeWithoutCheckpoints).then(res => {
             const routeId = res.data.id;
             const savedRoute = res.data;
@@ -62,5 +63,23 @@ export default {
                 })
             });
         })
-    }
+    },
+
+  updateCurrentRoute({dispatch, state}){
+      //store
+     //send noti
+    const route = state.currentRoute;
+    this.$axios.patch(`/routes/${route.id}`, route).then(()=>{
+      if(route.assigned_to_shipper) {
+        const notification = {
+          message: `Bạn đã được gán cho một đơn hàng ${route.id}`,
+          status: 'U',
+          type: 'A',
+          created_by: route.created_by,
+          notify_to: route.assigned_to_shipper
+        }
+        dispatch('notification/pushNotification', notification, {root: true});
+      }
+    })
+  }
 }

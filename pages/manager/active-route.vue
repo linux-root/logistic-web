@@ -30,7 +30,15 @@
 
         <material-card color="green" flat full-width title="Vận đơn đang được thực hiện"
           text="Here is a subtitle for this table" >
-          <v-data-table @click:row="openDialog($event)" :headers="headers" :items="activeRoutes" hide-default-footer >
+          <v-data-table :headers="headers" :items="activeRoutes" hide-default-footer >
+            <template v-slot:item="{item}">
+              <tr @click="openDialog(item)">
+                <td>{{item.name}}</td>
+                <td>{{item.status === 'A' ? 'Đang hoạt động' : 'invalid'}}</td>
+                <td>{{item.assigned_to_shipper}}</td>
+                <td>{{item.created_by}}</td>
+              </tr>
+            </template>
           </v-data-table>
         </material-card>
       </v-flex>
@@ -79,9 +87,7 @@
                 },
                 {
                     sortable: false,
-                    text: 'Salary',
-                    value: 'salary',
-                    align: 'right'
+                    text: 'Người tạo'
                 }
             ]
         }),
@@ -92,11 +98,11 @@
                 clearRouteData: 'route/clearRouteData',
                 fetchCurrentCheckpoints: 'route/fetchCurrentCheckpoints',
             }),
-            async openDialog(event){
+            async openDialog(route){
                 const selectedRoute = {
-                    id: event.id,
-                    name: event.name,
-                    assigned_to_shipper: event.assigned_to_shipper,
+                    id: route.id,
+                    name: route.name,
+                    assigned_to_shipper: route.assigned_to_shipper,
                     checkpoints: []
                 }
                 await this.setCurrentRoute(selectedRoute)

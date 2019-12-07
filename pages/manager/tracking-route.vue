@@ -1,17 +1,8 @@
 <template>
-  <v-container
-    fill-height
-    fluid
-    grid-list-xl
-  >
+  <v-container fill-height fluid grid-list-xl >
     <v-layout justify-center wrap >
       <v-flex md12 >
-        <material-card
-          color="green"
-          flat
-          full-width
-          title="Vận đơn được gán"
-          text="Here is a subtitle for this table" >
+        <material-card color="green" flat full-width title="Vận đơn được gán" text="Here is a subtitle for this table" >
           <v-data-table :headers="headers" :items="items.slice(0, 7)" hide-actions >
             <template slot="headerCell" slot-scope="{ header }" >
               <span class="subheading font-weight-light text--darken-3" v-text="header.text" />
