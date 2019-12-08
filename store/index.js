@@ -9,9 +9,18 @@ export const getters = {
     }
 }
 
+export const actions = {
+  setUser({commit}, user){
+    commit('SET_USER', user)
+  }
+}
+
 export const mutations = {
     CLEAR_ALL(state){
         state = {}
+    },
+    SET_USER({state}, user){
+      state.auth.user = user
     }
 }
 

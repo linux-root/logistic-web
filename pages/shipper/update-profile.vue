@@ -77,7 +77,7 @@
         components: {
             materialCard
         },
-        name: "register-shipper",
+        name: "update-profile",
         middleware: 'auth',
         validations: {
                 name: {required, maxLength: maxLength(50)},
@@ -86,11 +86,6 @@
                 select: {required},
                 citizenId: {required, numeric}
         },
-
-        mounted(){
-           this.resetData()
-        },
-
         data: () => ({
             name: '',
             email: '',
@@ -103,6 +98,10 @@
             snackbar: false,
             citizenId: null
         }),
+
+        mounted(){
+          this.resetData()
+        },
 
         computed: {
             ...mapGetters({user: 'user/getUser'}),
@@ -142,6 +141,9 @@
             }
         },
 
+        fetch({store}){
+            store.dispatch('user/updateUser')
+        },
         methods: {
             ...mapActions({updateUser: 'user/updateUser'}),
             submit() {
@@ -155,8 +157,7 @@
                         citizen_id: parseInt(this.citizenId)
                     }
                     this.$axios.patch(`/users/${this.user.id}`, updatedUser).then(()=>{
-                        this.updateUser();
-                        this.resetData()
+                        this.updateUser().then(() => this.resetData());
                         this.$swal(`Cập nhật tài khoản thành công`,'', 'success');
                     })
                 }

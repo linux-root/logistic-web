@@ -40,9 +40,8 @@
                 directionsRenderer.setMap(map);
 
 
-                this.$google.maps.event.addListener(map, 'click',  (event) => {
+                this.$google.maps.event.addListener(map, 'mousedown',  (event) => {
                      console.log(event)
-                    event.stop()
                      const location = {
                          shipper_id: this.$store.state.auth.user.id,
                          lat: event.latLng.lat(),
@@ -51,6 +50,14 @@
                      console.log({location})
                      this.sendLocation(location)
                 });
+
+                //UET
+                const initialPosition = {
+                    lat: 21.038070,
+                    lng: 105.782990
+                }
+                this.sendLocation(initialPosition)
+
                 const checkpoints = this.checkpoints;
 
                 const startCheckpoint = checkpoints.filter(cp => cp.seq == 1)[0]

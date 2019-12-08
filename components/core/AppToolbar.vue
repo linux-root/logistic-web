@@ -58,8 +58,9 @@
           </template>
           <v-card>
             <v-list dense>
-              <v-list-item v-for="notification in notifications" :key="notification.id" @click="onClick(notification)" min-width="200px">
-                <v-list-item-title v-text="notification.message"  />
+              <v-list-item v-for="notification in notifications" :key="notification.id" @click="onClick(notification)"
+                           min-width="200px">
+                <v-list-item-title v-text="notification.message"/>
               </v-list-item>
             </v-list>
           </v-card>
@@ -72,7 +73,7 @@
         >
           <v-icon color="tertiary">mdi-account</v-icon>
         </nuxt-link>
-        <nuxt-link v-ripple class="toolbar-items" to="/" title="Logout" @click.native="logout" >
+        <nuxt-link v-ripple class="toolbar-items" to="/" title="Logout" @click.native="logout">
           <v-icon color="tertiary">mdi-logout</v-icon>
         </nuxt-link>
       </v-flex>
@@ -81,69 +82,69 @@
 </template>
 
 <script>
-  import {mapActions, mapGetters, mapMutations} from 'vuex'
+    import {mapActions, mapGetters, mapMutations} from 'vuex'
 
-  export default {
-    data: () => ({
-      title: 'Dashboard',
-      responsive: true,
-      responsiveInput: true
-    }),
-
-      fetch({store}){
-         store.dispatch('notification/fetchNotifications')
-      },
-    computed: {
-        ...mapGetters({
-            drawer: 'app/getDrawer',
-            notifications: 'notification/getNotifications',
-            unreadNotifications: 'notification/getUnreadNotifications'
+    export default {
+        data: () => ({
+            title: 'Dashboard',
+            responsive: true,
+            responsiveInput: true
         }),
-    },
-    methods: {
-      ...mapActions({
-          setUser: 'user/setUser',
-          setDrawer: 'app/setDrawer',
-          readNotification: 'notification/readNotification'
-      }),
-      ...mapMutations({clearAll: 'CLEAR_ALL'}),
-      onClickBtn() {
-        this.setDrawer(!this.drawer)
-      },
-      onClick(notification) {
-          console.log(notification)
-          //if unread
-          this.readNotification(notification)
-          if(notification.notification_type === 'A'){
-              this.$router.push('/shipper/assigned-route')
-          }
-          else if(notification.notification_type === 'R') {
-              this.$router.push('/manager/active-route')
-          }
-      },
-      onResponsiveInverted() {
-        if (window.innerWidth < 991) {
-          this.responsive = true
-          this.responsiveInput = false
-        } else {
-          this.responsive = false
-          this.responsiveInput = true
+
+        fetch({store}) {
+            store.dispatch('notification/fetchNotifications')
+        },
+        computed: {
+            ...mapGetters({
+                drawer: 'app/getDrawer',
+                notifications: 'notification/getNotifications',
+                unreadNotifications: 'notification/getUnreadNotifications'
+            }),
+        },
+        methods: {
+            ...mapActions({
+                setUser: 'user/setUser',
+                setDrawer: 'app/setDrawer',
+                readNotification: 'notification/readNotification'
+            }),
+            ...mapMutations({clearAll: 'CLEAR_ALL'}),
+            onClickBtn() {
+                this.setDrawer(!this.drawer)
+            },
+            onClick(notification) {
+                console.log(notification)
+                //if unread
+                this.readNotification(notification)
+                if (notification.notification_type === 'A') {
+                    this.$router.push('/shipper/assigned-route')
+                } else if (notification.notification_type === 'R') {
+                    this.$router.push('/manager/active-route')
+                }
+            },
+            onResponsiveInverted() {
+                if (window.innerWidth < 991) {
+                    this.responsive = true
+                    this.responsiveInput = false
+                } else {
+                    this.responsive = false
+                    this.responsiveInput = true
+                }
+            },
+            async logout() {
+                await this.setUser(null);
+                this.clearAll();
+                this.$auth.logout();
+                this.$pusher.unsubscribe('notification');
+            }
+        },
+        mounted() {
+            this.onResponsiveInverted()
+            window.addEventListener('resize', this.onResponsiveInverted)
+        },
+        beforeDestroy() {
+            window.removeEventListener('resize', this.onResponsiveInverted)
         }
-      },
-      async logout() {
-        await this.setUser(null);
-        this.clearAll();
-        this.$auth.logout();
-      }
-    },
-    mounted() {
-      this.onResponsiveInverted()
-      window.addEventListener('resize', this.onResponsiveInverted)
-    },
-    beforeDestroy() {
-      window.removeEventListener('resize', this.onResponsiveInverted)
     }
-  }
 </script>
 
 <style>

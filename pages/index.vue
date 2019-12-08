@@ -25,12 +25,11 @@
             store.dispatch('notification/fetchNotifications')
         },
         computed: {
-            user() {
-                return this.$store.state.auth.user
-            },
-
+           ...mapGetters({
+               user: 'user/getUser'
+           }),
             role() {
-                return this.$store.state.auth.user.is_manager ? 'Manager' : 'Shipper'
+                return this.$store.state.user.user.is_manager ? 'Manager' : 'Shipper'
             }
         }
     }

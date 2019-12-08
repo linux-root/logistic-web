@@ -16,8 +16,8 @@
             })
         },
         data: () => ({
-            shipperPosition: null
-
+            shipperPosition: null,
+            map : null
         })
         ,
         async mounted() {
@@ -27,11 +27,19 @@
                 console.log('subscribe successfully ')
             });
             const shipperId = this.currentRoute.assigned_to_shipper
-            console.log({shipperId})
             channel.bind(shipperId, data => {
                 console.log({data})
-                this.shipperPosition.setPosition(data)
-            });
+                const img = '/position.png'
+                if (this.shipperPosition == null) {
+                    this.shipperPosition = new this.$google.maps.Marker({
+                        position: data,
+                        map: this.map,
+                        icon: img
+                    })
+                }else {
+                    this.shipperPosition.setPosition(data)
+                }
+            })
         },
         methods: {
             ...mapActions({
@@ -45,22 +53,14 @@
                 var directionsRenderer = new this.$google.maps.DirectionsRenderer();
 
                 const map = new this.$google.maps.Map(this.$refs.map, {zoom: 15, center: mapCenter.geo_coordinate});
+                this.map = map
 
                 directionsRenderer.setMap(map);
 
                 const checkpoints = this.checkpoints;
 
                 const startCheckpoint = checkpoints.filter(cp => cp.seq == 1)[0]
-                const img ='/position.png'
 
-                this.shipperPosition = new this.$google.maps.Marker({
-                    position: {
-                        lat: startCheckpoint.geo_coordinate.lat + 0.0000005,
-                        lng: startCheckpoint.geo_coordinate.lng + 0.0000006
-                    },
-                    map: map,
-                    icon: img
-                })
 
                 // infoWindow.setPosition(shipperP);
                 // infoWindow.setContent('Hà Hữu Vinh');

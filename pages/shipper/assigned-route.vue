@@ -13,12 +13,7 @@
             <v-container fluid>
               <v-layout wrap>
                 <v-flex xs12 md12>
-                  <v-card>
-                <!--    <v-card-title>
-                      <span class="headline">{{currentRoute.name}}</span>
-                    </v-card-title>-->
                       <navigation ref="navigation"/>
-                  </v-card>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -92,10 +87,12 @@
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
+                    showCloseButton: true,
                     confirmButtonText: 'Bắt đầu',
                     cancelButtonText: 'Từ chối'
                 }).then((result) => {
-                    if (!result.value) {
+                    console.log(result)
+                    if (result.dismiss === 'cancel') {
                         this.$swal.fire(
                             'Đã từ chối',
                             `Từ chối Route ${event.name}`,
@@ -103,7 +100,7 @@
                         )
                         this.refuseRoute(event.id);
                     }
-                    else {
+                    else if(result.value){
                         this.acceptRoute(event.id)
                         this.openDialog(event)
                     }
