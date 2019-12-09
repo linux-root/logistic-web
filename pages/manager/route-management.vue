@@ -35,7 +35,6 @@
       </v-flex>
 
       <v-flex sm6 xs12 md6 lg6>
-        <nuxt-link to="/manager/edit-route">
           <material-stats-card
             color="red lighten-4"
             icon="mdi-truck-fast"
@@ -47,7 +46,6 @@
             sub-text="Sửa Route"
             sub-text-color="red--text lightten-1"
           />
-        </nuxt-link>
       </v-flex>
 
       <v-flex sm6 xs12 md6 lg6>

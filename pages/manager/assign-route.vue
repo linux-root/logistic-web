@@ -9,8 +9,8 @@
               <tr @click="assignShipper(item)">
                 <td>{{item.id}}</td>
                 <td>{{item.name}}</td>
-                <td>{{item.phone}}</td>
-                <td>{{item.status === 'P' ? 'Chưa gán Shipper' : 'Bị vô hiệu hóa'}}</td>
+                <td>{{3}}</td>
+                <td>{{item.status === 'U' ? 'Chưa gán Shipper' : 'U'}}</td>
               </tr>
             </template>
           </v-data-table>
