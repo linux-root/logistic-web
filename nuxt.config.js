@@ -1,4 +1,4 @@
-require('dotenv').config()
+// require('dotenv').config()
 const GOOGLE_MAP_API_KEY = 'AIzaSyAhAV2NWcLitLKgc_3_uo7BmPOuMT5JhKE'
 
 export default {
