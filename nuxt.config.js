@@ -1,4 +1,3 @@
-import colors from 'vuetify/es5/util/colors'
 require('dotenv').config()
 const GOOGLE_MAP_API_KEY = 'AIzaSyAhAV2NWcLitLKgc_3_uo7BmPOuMT5JhKE'
 
@@ -27,7 +26,8 @@ export default {
   ** Global CSS
   */
   css: [
-    '~/assets/animate.css'
+    '~/assets/animate.css',
+    '~/assets/style/index.scss'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -91,30 +91,10 @@ export default {
   ** https://github.com/nuxt-community/vuetify-module
   */
   vuetify: {
-    customVariables: ['~/assets/style/index.scss'],
+    // customVariables: ['~/assets/style/index.scss'],
+    customVariables: ['~/assets/variables.scss'],
     theme: {
       dark: false,
-      themes: {
-        dark: {
-          primary: colors.blue.darken2,
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        },
-          /*default: {
-              primary: '#4caf50',
-              secondary: '#4caf50',
-              tertiary: '#495057',
-              accent: '#82B1FF',
-              error: '#f55a4e',
-              info: '#00d3ee',
-              success: '#5cb860',
-              warning: '#ffa21a'
-          }*/
-      }
     }
   },
   /*

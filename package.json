@@ -24,6 +24,6 @@
     "vuelidate": "^0.7.4"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0"
+    "@nuxtjs/vuetify": "^1.5.14"
   }
 }
